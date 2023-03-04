@@ -1,0 +1,949 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 24
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  SQL > mysqldump -u root@localhost -p nombre_de_la_base_de_datos > archivo.sql
+                               -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root@localhost -p nombre_de_la_base_de_datos > archivo.sql' at line 1
+ MySQL  localhost:3306 ssl  SQL > mysqldump -u root@localhost -p root nombre_de_la_base_de_datos > archivo.sql ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root@localhost -p root nombre_de_la_base_de_datos > archivo.sql' at line 1
+ MySQL  localhost:3306 ssl  SQL > mysqldump -u root@localhost -p root nombre_de_la_base_de_datos > archivo.sql
+                               -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root@localhost -p root nombre_de_la_base_de_datos > archivo.sql' at line 1
+ MySQL  localhost:3306 ssl  SQL > show datbases;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'datbases' at line 1
+ MySQL  localhost:3306 ssl  SQL > show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| a                          |
+| agencia                    |
+| credit_cards               |
+| eva1                       |
+| evaluacion_1               |
+| human_resources            |
+| information_schema         |
+| mysql                      |
+| nombre_de_la_base_de_datos |
+| orders                     |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+14 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  SQL > \use orders
+Default schema set to `orders`.
+Fetching global names, object names from `orders` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE '/ruta/al/archivo.csv'
+                                       -> INTO TABLE nombre_de_la_tabla
+                                       -> FIELDS TERMINATED BY ','
+                                       -> ENCLOSED BY '"'
+                                       -> LINES TERMINATED BY '\n'
+                                       -> IGNORE 1 ROWS;
+ERROR: 1146 (42S02): Table 'orders.nombre_de_la_tabla' doesn't exist
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:\Users\isai1\OneDrive\Escritorio/orders.csv'  INTO TABLE nombre_de_la_tabla FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1146 (42S02): Table 'orders.nombre_de_la_tabla' doesn't exist
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:\Users\isai1\OneDrive\Escritorio/orders.csv'  INTO orders FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'orders FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNOR' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:\Users\isai1\OneDrive\Escritorio\orders.csv'  INTO orders FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'orders FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNOR' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE C:\Users\isai1\OneDrive\Escritorio\orders.csv  INTO orders FIELDS TERMINATED BY ','  ENCLOSED BY '"'  LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\i'
+ERROR: Unknown command '\O'
+ERROR: Unknown command '\E'
+ERROR: Unknown command '\o'
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'C:serssai1neDrivescritoriorders.csv  INTO orders FIELDS TERMINATED BY ','  ENCLO' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/users/isai1/OneDrive/Escritorio/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > SHOW VARIABLES LIKE 'secure_file_priv';
++------------------+------------------------------------------------+
+| Variable_name    | Value                                          |
++------------------+------------------------------------------------+
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\ |
++------------------+------------------------------------------------+
+1 row in set, 1 warning (0.0019 sec)
+Warning (code 1366): Incorrect string value: '\xE1ndar ...' for column 'VARIABLE_VALUE' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/users/isai1/OneDrive/Escritorio/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > local LOAD DATA INFILE ' C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'local LOAD DATA INFILE ' C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\orders.cs' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1265 (01000): Data truncated for column 'ship_mode' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE order MODIFY COLUMN ship_mode VARCHAR(150);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order MODIFY COLUMN ship_mode VARCHAR(150)' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE orders MODIFY COLUMN ship_mode VARCHAR(150);
+Query OK, 1 row affected (0.0258 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'CG-12520' for column 'customer_id' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > desc orders;
++---------------+--------------------------------------------+------+-----+---------+----------------+
+| Field         | Type                                       | Null | Key | Default | Extra          |
++---------------+--------------------------------------------+------+-----+---------+----------------+
+| row_id        | int                                        | NO   | PRI | NULL    | auto_increment |
+| order_id      | varchar(25)                                | NO   |     | NULL    |                |
+| order_date    | int                                        | NO   |     | NULL    |                |
+| ship_date     | int                                        | NO   |     | NULL    |                |
+| ship_mode     | varchar(150)                               | YES  |     | NULL    |                |
+| customer_id   | int                                        | NO   |     | NULL    |                |
+| customer_name | varchar(50)                                | NO   |     | NULL    |                |
+| segment       | enum('consumer','home office','corporate') | NO   |     | NULL    |                |
+| country       | varchar(70)                                | NO   |     | NULL    |                |
+| city          | varchar(40)                                | NO   |     | NULL    |                |
+| state         | varchar(40)                                | NO   |     | NULL    |                |
+| postal_code   | int                                        | YES  |     | NULL    |                |
+| region        | enum('south','west','central','east')      | NO   |     | NULL    |                |
++---------------+--------------------------------------------+------+-----+---------+----------------+
+13 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE orders MODIFY COLUMN customer_id VARCHAR(150);
+Query OK, 1 row affected (0.0201 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1265 (01000): Data truncated for column 'region' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE orders MODIFY COLUMN region VARCHAR(150);
+Query OK, 1 row affected (0.0147 sec)
+
+Records: 1  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry '1' for key 'orders.PRIMARY'
+ MySQL  localhost:3306 ssl  orders  SQL > delete from orders where id=1;
+ERROR: 1054 (42S22): Unknown column 'id' in 'where clause'
+ MySQL  localhost:3306 ssl  orders  SQL > delete from orders where row_id=1;
+Query OK, 1 row affected (0.0035 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6sisch' for column 'customer_name' at row 405
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6lking' for column 'customer_name' at row 669
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE orders MODIFY COLUMN customer_name VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Query OK, 0 rows affected (0.0241 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6lking' for column 'customer_name' at row 669
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE <nombre_tabla> CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '<nombre_tabla> CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE orders CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Query OK, 0 rows affected (0.0214 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6lking' for column 'customer_name' at row 669
+ MySQL  localhost:3306 ssl  orders  SQL > aLTER TABLE orders CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+Query OK, 0 rows affected (0.0064 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6lking' for column 'customer_name' at row 669
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1300 (HY000): Invalid utf8mb4 character string: 'Peter B'
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect string value: '\xF6sisch' for column 'customer_name' at row 760
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+Query OK, 9994 rows affected (0.0995 sec)
+
+Records: 9994  Deleted: 0  Skipped: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > select * from orders limit 100;
++--------+----------------+------------+-----------+----------------+-------------+--------------------+-------------+---------------+-----------------+----------------+-------------+----------+
+| row_id | order_id       | order_date | ship_date | ship_mode      | customer_id | customer_name      | segment     | country       | city            | state          | postal_code | region   |
++--------+----------------+------------+-----------+----------------+-------------+--------------------+-------------+---------------+-----------------+----------------+-------------+----------+
+|      1 | CA-2016-152156 |      42682 |     42685 | Second Class   | CG-12520    | Claire Gute        | consumer    | U   |d States | Henderson       | Kentucky       |       42420 | South
+|      2 | CA-2016-152156 |      42682 |     42685 | Second Class   | CG-12520    | Claire Gute        | consumer    | U   |d States | Henderson       | Kentucky       |       42420 | South
+|      3 | CA-2016-138688 |      42533 |     42537 | Second Class   | DV-13045    | Darrin Van Huff    | corporate   | U    | States | Los Angeles     | California     |       90036 | West
+|      4 | US-2015-108966 |      42288 |     42295 | Standard Class | SO-20335    | Sean O'Donnell     | consumer    | U   |d States | Fort Lauderdale | Florida        |       33311 | South
+|      5 | US-2015-108966 |      42288 |     42295 | Standard Class | SO-20335    | Sean O'Donnell     | consumer    | U   |d States | Fort Lauderdale | Florida        |       33311 | South
+|      6 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|      7 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|      8 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|      9 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|     10 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|     11 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|     12 | CA-2014-115812 |      41799 |     41804 | Standard Class | BH-11710    | Brosina Hoffman    | consumer    | U    | States | Los Angeles     | California     |       90032 | West
+|     13 | CA-2017-114412 |      42840 |     42845 | Standard Class | AA-10480    | Andrew Allen       | consumer    | U   |d States | Concord         | North Carolina |       28027 | South
+|     14 | CA-2016-161389 |      42709 |     42714 | Standard Class | IM-15070    | Irene Maddox       | consumer    | U    | States | Seattle         | Washington     |       98103 | West
+|     15 | US-2015-118983 |      42330 |     42334 | Standard Class | HP-14815    | Harold Pawlan      | home office | U |ted States | Fort Worth      | Texas          |       76106 | Central
+|     16 | US-2015-118983 |      42330 |     42334 | Standard Class | HP-14815    | Harold Pawlan      | home office | U |ted States | Fort Worth      | Texas          |       76106 | Central
+|     17 | CA-2014-105893 |      41954 |     41961 | Standard Class | PK-19075    | Pete Kriz          | consumer    | U |ted States | Madison         | Wisconsin      |       53711 | Central
+|     18 | CA-2014-167164 |      41772 |     41774 | Second Class   | AG-10270    | Alejandro Grove    | consumer    | U    | States | West Jordan     | Utah           |       84084 | West
+|     19 | CA-2014-143336 |      41878 |     41883 | Second Class   | ZD-21925    | Zuschuss Donatelli | consumer    | U    | States | San Francisco   | California     |       94109 | West
+|     20 | CA-2014-143336 |      41878 |     41883 | Second Class   | ZD-21925    | Zuschuss Donatelli | consumer    | U    | States | San Francisco   | California     |       94109 | West
+|     21 | CA-2014-143336 |      41878 |     41883 | Second Class   | ZD-21925    | Zuschuss Donatelli | consumer    | U    | States | San Francisco   | California     |       94109 | West
+|     22 | CA-2016-137330 |      42713 |     42717 | Standard Class | KB-16585    | Ken Black          | corporate   | U |ted States | Fremont         | Nebraska       |       68025 | Central
+|     23 | CA-2016-137330 |      42713 |     42717 | Standard Class | KB-16585    | Ken Black          | corporate   | U |ted States | Fremont         | Nebraska       |       68025 | Central
+|     24 | US-2017-156909 |      42932 |     42934 | Second Class   | SF-20065    | Sandra Flanagan    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     25 | CA-2015-106320 |      42272 |     42277 | Standard Class | EB-13870    | Emily Burns        | consumer    | U    | States | Orem            | Utah           |       84057 | West
+|     26 | CA-2016-121755 |      42385 |     42389 | Second Class   | EH-13945    | Eric Hoffmann      | consumer    | U    | States | Los Angeles     | California     |       90049 | West
+|     27 | CA-2016-121755 |      42385 |     42389 | Second Class   | EH-13945    | Eric Hoffmann      | consumer    | U    | States | Los Angeles     | California     |       90049 | West
+|     28 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     29 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     30 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     31 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     32 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     33 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     34 | US-2015-150630 |      42264 |     42268 | Standard Class | TB-21520    | Tracy Blumstein    | consumer    | U    | States | Philadelphia    | Pennsylvania   |       19140 | East
+|     35 | CA-2017-107727 |      43027 |     43031 | Second Class   | MA-17560    | Matt Abelman       | home office | U |ted States | Houston         | Texas          |       77095 | Central
+|     36 | CA-2016-117590 |      42712 |     42714 | First Class    | GH-14485    | Gene Hale          | corporate   | U |ted States | Richardson      | Texas          |       75080 | Central
+|     37 | CA-2016-117590 |      42712 |     42714 | First Class    | GH-14485    | Gene Hale          | corporate   | U |ted States | Richardson      | Texas          |       75080 | Central
+|     38 | CA-2015-117415 |      42365 |     42369 | Standard Class | SN-20710    | Steve Nguyen       | home office | U |ted States | Houston         | Texas          |       77041 | Central
+|     39 | CA-2015-117415 |      42365 |     42369 | Standard Class | SN-20710    | Steve Nguyen       | home office | U |ted States | Houston         | Texas          |       77041 | Central
+|     40 | CA-2015-117415 |      42365 |     42369 | Standard Class | SN-20710    | Steve Nguyen       | home office | U |ted States | Houston         | Texas          |       77041 | Central
+|     41 | CA-2015-117415 |      42365 |     42369 | Standard Class | SN-20710    | Steve Nguyen       | home office | U |ted States | Houston         | Texas          |       77041 | Central
+|     42 | CA-2017-120999 |      42988 |     42993 | Standard Class | LC-16930    | Linda Cazamias     | corporate   | U |ted States | Naperville      | Illinois       |       60540 | Central
+|     43 | CA-2016-101343 |      42568 |     42573 | Standard Class | RA-19885    | Ruben Ausman       | corporate   | U    | States | Los Angeles     | California     |       90049 | West
+|     44 | CA-2017-139619 |      42997 |     43001 | Standard Class | ES-14080    | Erin Smith         | corporate   | U   |d States | Melbourne       | Florida        |       32935 | South
+|     45 | CA-2016-118255 |      42440 |     42442 | First Class    | ON-18715    | Odella Nelson      | corporate   | U |ted States | Eagan           | Minnesota      |       55122 | Central
+|     46 | CA-2016-118255 |      42440 |     42442 | First Class    | ON-18715    | Odella Nelson      | corporate   | U |ted States | Eagan           | Minnesota      |       55122 | Central
+|     47 | CA-2014-146703 |      41932 |     41937 | Second Class   | PO-18865    | Patrick O'Donnell  | consumer    | U |ted States | Westland        | Michigan       |       48185 | Central
+|     48 | CA-2016-169194 |      42541 |     42546 | Standard Class | LH-16900    | Lena Hernandez     | consumer    | U    | States | Dover           | Delaware       |       19901 | East
+|     49 | CA-2016-169194 |      42541 |     42546 | Standard Class | LH-16900    | Lena Hernandez     | consumer    | U    | States | Dover           | Delaware       |       19901 | East
+|     50 | CA-2015-115742 |      42112 |     42116 | Standard Class | DP-13000    | Darren Powers      | consumer    | U |ted States | New Albany      | Indiana        |       47150 | Central
+|     51 | CA-2015-115742 |      42112 |     42116 | Standard Class | DP-13000    | Darren Powers      | consumer    | U |ted States | New Albany      | Indiana        |       47150 | Central
+|     52 | CA-2015-115742 |      42112 |     42116 | Standard Class | DP-13000    | Darren Powers      | consumer    | U |ted States | New Albany      | Indiana        |       47150 | Central
+|     53 | CA-2015-115742 |      42112 |     42116 | Standard Class | DP-13000    | Darren Powers      | consumer    | U |ted States | New Albany      | Indiana        |       47150 | Central
+|     54 | CA-2016-105816 |      42715 |     42721 | Standard Class | JM-15265    | Janet Molinari     | corporate   | U    | States | New York City   | New York       |       10024 | East
+|     55 | CA-2016-105816 |      42715 |     42721 | Standard Class | JM-15265    | Janet Molinari     | corporate   | U    | States | New York City   | New York       |       10024 | East
+|     56 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     57 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     58 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     59 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     60 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     61 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     62 | CA-2016-111682 |      42538 |     42539 | First Class    | TB-21055    | Ted Butterfield    | consumer    | U    | States | Troy            | New York       |       12180 | East
+|     63 | CA-2015-135545 |      42332 |     42338 | Standard Class | KM-16720    | Kunst Miller       | consumer    | U    | States | Los Angeles     | California     |       90004 | West
+|     64 | CA-2015-135545 |      42332 |     42338 | Standard Class | KM-16720    | Kunst Miller       | consumer    | U    | States | Los Angeles     | California     |       90004 | West
+|     65 | CA-2015-135545 |      42332 |     42338 | Standard Class | KM-16720    | Kunst Miller       | consumer    | U    | States | Los Angeles     | California     |       90004 | West
+|     66 | CA-2015-135545 |      42332 |     42338 | Standard Class | KM-16720    | Kunst Miller       | consumer    | U    | States | Los Angeles     | California     |       90004 | West
+|     67 | US-2015-164175 |      42124 |     42129 | Standard Class | PS-18970    | Paul Stevenson     | home office | U |ted States | Chicago         | Illinois       |       60610 | Central
+|     68 | CA-2014-106376 |      41978 |     41983 | Standard Class | BS-11590    | Brendan Sweed      | corporate   | U    | States | Gilbert         | Arizona        |       85234 | West
+|     69 | CA-2014-106376 |      41978 |     41983 | Standard Class | BS-11590    | Brendan Sweed      | corporate   | U    | States | Gilbert         | Arizona        |       85234 | West
+|     70 | CA-2016-119823 |      42525 |     42527 | First Class    | KD-16270    | Karen Daniels      | consumer    | U   |d States | Springfield     | Virginia       |       22153 | South
+|     71 | CA-2016-106075 |      42631 |     42636 | Standard Class | HM-14980    | Henry MacAllister  | consumer    | U    | States | New York City   | New York       |       10009 | East
+|     72 | CA-2017-114440 |      42992 |     42995 | Second Class   | TB-21520    | Tracy Blumstein    | consumer    | U |ted States | Jackson         | Michigan       |       49201 | Central
+|     73 | US-2015-134026 |      42120 |     42126 | Standard Class | JE-15745    | Joel Eaton         | consumer    | U   |d States | Memphis         | Tennessee      |       38109 | South
+|     74 | US-2015-134026 |      42120 |     42126 | Standard Class | JE-15745    | Joel Eaton         | consumer    | U   |d States | Memphis         | Tennessee      |       38109 | South
+|     75 | US-2015-134026 |      42120 |     42126 | Standard Class | JE-15745    | Joel Eaton         | consumer    | U   |d States | Memphis         | Tennessee      |       38109 | South
+|     76 | US-2017-118038 |      43078 |     43080 | First Class    | KB-16600    | Ken Brennan        | corporate   | U |ted States | Houston         | Texas          |       77041 | Central
+|     77 | US-2017-118038 |      43078 |     43080 | First Class    | KB-16600    | Ken Brennan        | corporate   | U |ted States | Houston         | Texas          |       77041 | Central
+|     78 | US-2017-118038 |      43078 |     43080 | First Class    | KB-16600    | Ken Brennan        | corporate   | U |ted States | Houston         | Texas          |       77041 | Central
+|     79 | US-2014-147606 |      41969 |     41974 | Second Class   | JE-15745    | Joel Eaton         | consumer    | U |ted States | Houston         | Texas          |       77070 | Central
+|     80 | CA-2016-127208 |      42533 |     42536 | First Class    | SC-20770    | Stewart Carmichael | corporate   | U   |d States | Decatur         | Alabama        |       35601 | South
+|     81 | CA-2016-127208 |      42533 |     42536 | First Class    | SC-20770    | Stewart Carmichael | corporate   | U   |d States | Decatur         | Alabama        |       35601 | South
+|     82 | CA-2014-139451 |      41924 |     41928 | Standard Class | DN-13690    | Duane Noonan       | consumer    | U    | States | San Francisco   | California     |       94122 | West
+|     83 | CA-2014-139451 |      41924 |     41928 | Standard Class | DN-13690    | Duane Noonan       | consumer    | U    | States | San Francisco   | California     |       94122 | West
+|     84 | CA-2015-149734 |      42250 |     42255 | Standard Class | JC-16105    | Julie Creighton    | corporate   | U   |d States | Durham          | North Carolina |       27707 | South
+|     85 | US-2017-119662 |      43052 |     43055 | First Class    | CS-12400    | Christopher Schild | home office | U |ted States | Chicago         | Illinois       |       60623 | Central
+|     86 | CA-2017-140088 |      42883 |     42885 | Second Class   | PO-18865    | Patrick O'Donnell  | consumer    | U   |d States | Columbia        | South Carolina |       29203 | South
+|     87 | CA-2017-155558 |      43034 |     43041 | Standard Class | PG-18895    | Paul Gonzalez      | consumer    | U |ted States | Rochester       | Minnesota      |       55901 | Central
+|     88 | CA-2017-155558 |      43034 |     43041 | Standard Class | PG-18895    | Paul Gonzalez      | consumer    | U |ted States | Rochester       | Minnesota      |       55901 | Central
+|     89 | CA-2016-159695 |      42465 |     42470 | Second Class   | GM-14455    | Gary Mitchum       | home office | U |ted States | Houston         | Texas          |       77095 | Central
+|     90 | CA-2016-109806 |      42630 |     42635 | Standard Class | JS-15685    | Jim Sink           | corporate   | U    | States | Los Angeles     | California     |       90036 | West
+|     91 | CA-2016-109806 |      42630 |     42635 | Standard Class | JS-15685    | Jim Sink           | corporate   | U    | States | Los Angeles     | California     |       90036 | West
+|     92 | CA-2016-109806 |      42630 |     42635 | Standard Class | JS-15685    | Jim Sink           | corporate   | U    | States | Los Angeles     | California     |       90036 | West
+|     93 | CA-2015-149587 |      42035 |     42040 | Second Class   | KB-16315    | Karl Braun         | consumer    | U |ted States | Minneapolis     | Minnesota      |       55407 | Central
+|     94 | CA-2015-149587 |      42035 |     42040 | Second Class   | KB-16315    | Karl Braun         | consumer    | U |ted States | Minneapolis     | Minnesota      |       55407 | Central
+|     95 | CA-2015-149587 |      42035 |     42040 | Second Class   | KB-16315    | Karl Braun         | consumer    | U |ted States | Minneapolis     | Minnesota      |       55407 | Central
+|     96 | US-2017-109484 |      43045 |     43051 | Standard Class | RB-19705    | Roger Barcio       | home office | U    | States | Portland        | Oregon         |       97206 | West
+|     97 | CA-2017-161018 |      43048 |     43050 | Second Class   | PN-18775    | Parhena Norris     | home office | U    | States | New York City   | New York       |       10009 | East
+|     98 | CA-2017-157833 |      42903 |     42906 | First Class    | KD-16345    | Katherine Ducich   | consumer    | U    | States | San Francisco   | California     |       94122 | West
+|     99 | CA-2016-149223 |      42619 |     42624 | Standard Class | ER-13855    | Elpida Rittenbach  | corporate   | U |ted States | Saint Paul      | Minnesota      |       55106 | Central
+|    100 | CA-2016-158568 |      42611 |     42615 | Standard Class | RB-19465    | Rick Bensley       | home office | U |ted States | Chicago         | Illinois       |       60610 | Central
++--------+----------------+------------+-----------+----------------+-------------+--------------------+-------------+---------------+-----------------+----------------+-------------+----------+
+100 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > \use products
+MySQL Error 1049: Unknown database 'products'
+ MySQL  localhost:3306 ssl  orders  SQL > show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| a                          |
+| agencia                    |
+| credit_cards               |
+| eva1                       |
+| evaluacion_1               |
+| human_resources            |
+| information_schema         |
+| mysql                      |
+| nombre_de_la_base_de_datos |
+| orders                     |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+14 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > \use credit_cards
+Default schema set to `credit_cards`.
+Fetching global names, object names from `credit_cards` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  credit_cards  SQL > show tables;
++------------------------+
+| Tables_in_credit_cards |
++------------------------+
+| credit_cards           |
+| usuarios               |
++------------------------+
+2 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/a.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1262 (01000): Row 1 was truncated; it contained more data than there were input columns
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| card_type        | varchar(50)   | YES  |     | NULL    |       |
+| full_name        | varchar(100)  | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100)  | YES  |     | NULL    |       |
+| card_number      | varchar(25)   | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100)  | YES  |     | NULL    |       |
+| cvv_cvv2         | varchar(4)    | YES  |     | NULL    |       |
+| issue_date       | date          | YES  |     | NULL    |       |
+| expiry_date      | date          | YES  |     | NULL    |       |
+| billing_date     | date          | YES  |     | NULL    |       |
+| card_pin         | varchar(4)    | YES  |     | NULL    |       |
+| credit_limit     | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+11 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards DROP COLUMN full_name;
+Query OK, 0 rows affected (0.0079 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| card_type        | varchar(50)   | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100)  | YES  |     | NULL    |       |
+| card_number      | varchar(25)   | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100)  | YES  |     | NULL    |       |
+| cvv_cvv2         | varchar(4)    | YES  |     | NULL    |       |
+| issue_date       | date          | YES  |     | NULL    |       |
+| expiry_date      | date          | YES  |     | NULL    |       |
+| billing_date     | date          | YES  |     | NULL    |       |
+| card_pin         | varchar(4)    | YES  |     | NULL    |       |
+| credit_limit     | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+10 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN card_number VARCHAR(100);
+Query OK, 0 rows affected (0.0185 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN card_number INT;
+Query OK, 0 rows affected (0.0174 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| card_type        | varchar(50)   | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100)  | YES  |     | NULL    |       |
+| card_number      | int           | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100)  | YES  |     | NULL    |       |
+| cvv_cvv2         | varchar(4)    | YES  |     | NULL    |       |
+| issue_date       | date          | YES  |     | NULL    |       |
+| expiry_date      | date          | YES  |     | NULL    |       |
+| billing_date     | date          | YES  |     | NULL    |       |
+| card_pin         | varchar(4)    | YES  |     | NULL    |       |
+| credit_limit     | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+10 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN cvv_cvv2 INT;
+Query OK, 0 rows affected (0.0172 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| card_type        | varchar(50)   | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100)  | YES  |     | NULL    |       |
+| card_number      | int           | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100)  | YES  |     | NULL    |       |
+| cvv_cvv2         | int           | YES  |     | NULL    |       |
+| issue_date       | date          | YES  |     | NULL    |       |
+| expiry_date      | date          | YES  |     | NULL    |       |
+| billing_date     | date          | YES  |     | NULL    |       |
+| card_pin         | varchar(4)    | YES  |     | NULL    |       |
+| credit_limit     | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+10 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN card_pin INT;
+Query OK, 0 rows affected (0.0179 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN credit_limit INT;
+Query OK, 0 rows affected (0.0177 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| card_type        | varchar(50)  | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100) | YES  |     | NULL    |       |
+| card_number      | int          | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100) | YES  |     | NULL    |       |
+| cvv_cvv2         | int          | YES  |     | NULL    |       |
+| issue_date       | date         | YES  |     | NULL    |       |
+| expiry_date      | date         | YES  |     | NULL    |       |
+| billing_date     | date         | YES  |     | NULL    |       |
+| card_pin         | int          | YES  |     | NULL    |       |
+| credit_limit     | int          | YES  |     | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+10 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE usuarios FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1366 (HY000): Incorrect integer value: 'American Express' for column 'id' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE credit_cards FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1264 (22003): Out of range value for column 'card_number' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN card_number varchar(150);
+Query OK, 0 rows affected (0.0162 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE credit_cards FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1292 (22007): Incorrect date value: '42583' for column 'issue_date' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN issue_date int;
+Query OK, 0 rows affected (0.0198 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE credit_cards FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1292 (22007): Incorrect date value: '46600' for column 'expiry_date' at row 1
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN expiry_date varchar(50);
+Query OK, 0 rows affected (0.0170 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN issue_date varchar(50);
+Query OK, 0 rows affected (0.0142 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > ALTER TABLE credit_cards MODIFY COLUMN billing_date varchar(50);
+Query OK, 0 rows affected (0.0173 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/b.csv' INTO TABLE credit_cards FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+Query OK, 5000 rows affected (0.0842 sec)
+
+Records: 5000  Deleted: 0  Skipped: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > \use human_resources
+Default schema set to `human_resources`.
+Fetching global names, object names from `human_resources` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  human_resources  SQL > desc hr;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| emp_id                | int           | NO   | PRI | NULL    |       |
+| name_prefix           | varchar(10)   | YES  |     | NULL    |       |
+| fisrt_name            | varchar(50)   | YES  |     | NULL    |       |
+| middle_initial        | varchar(1)    | YES  |     | NULL    |       |
+| last_name             | varchar(50)   | NO   |     | NULL    |       |
+| gender                | enum('F','M') | YES  |     | NULL    |       |
+| e_mail                | varchar(120)  | YES  |     | NULL    |       |
+| father_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_maiden_name    | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth         | date          | YES  |     | NULL    |       |
+| time_of_birth         | time          | YES  |     | NULL    |       |
+| age_in_yrs            | int           | YES  |     | NULL    |       |
+| weight_in_kgs         | int           | YES  |     | NULL    |       |
+| date_of_joining       | date          | YES  |     | NULL    |       |
+| quarter_of_joining    | varchar(10)   | YES  |     | NULL    |       |
+| half_of_joinig        | varchar(10)   | YES  |     | NULL    |       |
+| year_of_joining       | int           | YES  |     | NULL    |       |
+| month_of_joinig       | int           | YES  |     | NULL    |       |
+| month_name_of_joining | varchar(10)   | YES  |     | NULL    |       |
+| short_month           | varchar(3)    | YES  |     | NULL    |       |
+| day_of_joining        | int           | YES  |     | NULL    |       |
+| dow_of_joining        | varchar(10)   | YES  |     | NULL    |       |
+| short_dow             | varchar(3)    | YES  |     | NULL    |       |
+| age_in_company_years  | int           | YES  |     | NULL    |       |
+| salary                | int           | YES  |     | NULL    |       |
+| last_hike_percentage  | decimal(5,2)  | YES  |     | NULL    |       |
+| ssn                   | varchar(20)   | NO   |     | NULL    |       |
+| phone_no              | varchar(20)   | YES  |     | NULL    |       |
+| place_name            | varchar(80)   | YES  |     | NULL    |       |
+| country               | varchar(50)   | YES  |     | NULL    |       |
+| city                  | varchar(50)   | YES  |     | NULL    |       |
+| state                 | varchar(60)   | YES  |     | NULL    |       |
+| zip                   | varchar(10)   | YES  |     | NULL    |       |
+| region                | varchar(10)   | YES  |     | NULL    |       |
+| user_name             | varchar(20)   | YES  |     | NULL    |       |
+| password              | varchar(20)   | YES  |     | NULL    |       |
++-----------------------+---------------+------+-----+---------+-------+
+37 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1292 (22007): Incorrect date value: '5/15/1964' for column 'date_of_birth' at row 1
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN date_of_joining varchar(50);
+Query OK, 0 rows affected (0.0250 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN date_of_birth varchar(50);
+Query OK, 0 rows affected (0.0226 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN time_of_birth varchar(50);
+Query OK, 0 rows affected (0.0245 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry '729914' for key 'hr.PRIMARY'
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN emp_id int;
+Query OK, 0 rows affected (0.0112 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > desc hr;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| emp_id                | int           | NO   | PRI | NULL    |       |
+| name_prefix           | varchar(10)   | YES  |     | NULL    |       |
+| fisrt_name            | varchar(50)   | YES  |     | NULL    |       |
+| middle_initial        | varchar(1)    | YES  |     | NULL    |       |
+| last_name             | varchar(50)   | NO   |     | NULL    |       |
+| gender                | enum('F','M') | YES  |     | NULL    |       |
+| e_mail                | varchar(120)  | YES  |     | NULL    |       |
+| father_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_maiden_name    | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| time_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| age_in_yrs            | int           | YES  |     | NULL    |       |
+| weight_in_kgs         | int           | YES  |     | NULL    |       |
+| date_of_joining       | varchar(50)   | YES  |     | NULL    |       |
+| quarter_of_joining    | varchar(10)   | YES  |     | NULL    |       |
+| half_of_joinig        | varchar(10)   | YES  |     | NULL    |       |
+| year_of_joining       | int           | YES  |     | NULL    |       |
+| month_of_joinig       | int           | YES  |     | NULL    |       |
+| month_name_of_joining | varchar(10)   | YES  |     | NULL    |       |
+| short_month           | varchar(3)    | YES  |     | NULL    |       |
+| day_of_joining        | int           | YES  |     | NULL    |       |
+| dow_of_joining        | varchar(10)   | YES  |     | NULL    |       |
+| short_dow             | varchar(3)    | YES  |     | NULL    |       |
+| age_in_company_years  | int           | YES  |     | NULL    |       |
+| salary                | int           | YES  |     | NULL    |       |
+| last_hike_percentage  | decimal(5,2)  | YES  |     | NULL    |       |
+| ssn                   | varchar(20)   | NO   |     | NULL    |       |
+| phone_no              | varchar(20)   | YES  |     | NULL    |       |
+| place_name            | varchar(80)   | YES  |     | NULL    |       |
+| country               | varchar(50)   | YES  |     | NULL    |       |
+| city                  | varchar(50)   | YES  |     | NULL    |       |
+| state                 | varchar(60)   | YES  |     | NULL    |       |
+| zip                   | varchar(10)   | YES  |     | NULL    |       |
+| region                | varchar(10)   | YES  |     | NULL    |       |
+| user_name             | varchar(20)   | YES  |     | NULL    |       |
+| password              | varchar(20)   | YES  |     | NULL    |       |
++-----------------------+---------------+------+-----+---------+-------+
+37 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry '729914' for key 'hr.PRIMARY'
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry '729914' for key 'hr.PRIMARY'
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr DROP PRIMARY KEY;
+Query OK, 0 rows affected (0.0212 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > desc hr;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| emp_id                | int           | NO   |     | NULL    |       |
+| name_prefix           | varchar(10)   | YES  |     | NULL    |       |
+| fisrt_name            | varchar(50)   | YES  |     | NULL    |       |
+| middle_initial        | varchar(1)    | YES  |     | NULL    |       |
+| last_name             | varchar(50)   | NO   |     | NULL    |       |
+| gender                | enum('F','M') | YES  |     | NULL    |       |
+| e_mail                | varchar(120)  | YES  |     | NULL    |       |
+| father_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_maiden_name    | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| time_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| age_in_yrs            | int           | YES  |     | NULL    |       |
+| weight_in_kgs         | int           | YES  |     | NULL    |       |
+| date_of_joining       | varchar(50)   | YES  |     | NULL    |       |
+| quarter_of_joining    | varchar(10)   | YES  |     | NULL    |       |
+| half_of_joinig        | varchar(10)   | YES  |     | NULL    |       |
+| year_of_joining       | int           | YES  |     | NULL    |       |
+| month_of_joinig       | int           | YES  |     | NULL    |       |
+| month_name_of_joining | varchar(10)   | YES  |     | NULL    |       |
+| short_month           | varchar(3)    | YES  |     | NULL    |       |
+| day_of_joining        | int           | YES  |     | NULL    |       |
+| dow_of_joining        | varchar(10)   | YES  |     | NULL    |       |
+| short_dow             | varchar(3)    | YES  |     | NULL    |       |
+| age_in_company_years  | int           | YES  |     | NULL    |       |
+| salary                | int           | YES  |     | NULL    |       |
+| last_hike_percentage  | decimal(5,2)  | YES  |     | NULL    |       |
+| ssn                   | varchar(20)   | NO   |     | NULL    |       |
+| phone_no              | varchar(20)   | YES  |     | NULL    |       |
+| place_name            | varchar(80)   | YES  |     | NULL    |       |
+| country               | varchar(50)   | YES  |     | NULL    |       |
+| city                  | varchar(50)   | YES  |     | NULL    |       |
+| state                 | varchar(60)   | YES  |     | NULL    |       |
+| zip                   | varchar(10)   | YES  |     | NULL    |       |
+| region                | varchar(10)   | YES  |     | NULL    |       |
+| user_name             | varchar(20)   | YES  |     | NULL    |       |
+| password              | varchar(20)   | YES  |     | NULL    |       |
++-----------------------+---------------+------+-----+---------+-------+
+37 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN user_name varchar(100) key;
+Query OK, 0 rows affected (0.0231 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > desc hr;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| emp_id                | int           | NO   |     | NULL    |       |
+| name_prefix           | varchar(10)   | YES  |     | NULL    |       |
+| fisrt_name            | varchar(50)   | YES  |     | NULL    |       |
+| middle_initial        | varchar(1)    | YES  |     | NULL    |       |
+| last_name             | varchar(50)   | NO   |     | NULL    |       |
+| gender                | enum('F','M') | YES  |     | NULL    |       |
+| e_mail                | varchar(120)  | YES  |     | NULL    |       |
+| father_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_maiden_name    | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| time_of_birth         | varchar(50)   | YES  |     | NULL    |       |
+| age_in_yrs            | int           | YES  |     | NULL    |       |
+| weight_in_kgs         | int           | YES  |     | NULL    |       |
+| date_of_joining       | varchar(50)   | YES  |     | NULL    |       |
+| quarter_of_joining    | varchar(10)   | YES  |     | NULL    |       |
+| half_of_joinig        | varchar(10)   | YES  |     | NULL    |       |
+| year_of_joining       | int           | YES  |     | NULL    |       |
+| month_of_joinig       | int           | YES  |     | NULL    |       |
+| month_name_of_joining | varchar(10)   | YES  |     | NULL    |       |
+| short_month           | varchar(3)    | YES  |     | NULL    |       |
+| day_of_joining        | int           | YES  |     | NULL    |       |
+| dow_of_joining        | varchar(10)   | YES  |     | NULL    |       |
+| short_dow             | varchar(3)    | YES  |     | NULL    |       |
+| age_in_company_years  | int           | YES  |     | NULL    |       |
+| salary                | int           | YES  |     | NULL    |       |
+| last_hike_percentage  | decimal(5,2)  | YES  |     | NULL    |       |
+| ssn                   | varchar(20)   | NO   |     | NULL    |       |
+| phone_no              | varchar(20)   | YES  |     | NULL    |       |
+| place_name            | varchar(80)   | YES  |     | NULL    |       |
+| country               | varchar(50)   | YES  |     | NULL    |       |
+| city                  | varchar(50)   | YES  |     | NULL    |       |
+| state                 | varchar(60)   | YES  |     | NULL    |       |
+| zip                   | varchar(10)   | YES  |     | NULL    |       |
+| region                | varchar(10)   | YES  |     | NULL    |       |
+| user_name             | varchar(100)  | NO   | PRI | NULL    |       |
+| password              | varchar(20)   | YES  |     | NULL    |       |
++-----------------------+---------------+------+-----+---------+-------+
+37 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry 'mgchamberlin' for key 'hr.PRIMARY'
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr DROP PRIMARY KEY;
+Query OK, 0 rows affected (0.0224 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > ALTER TABLE hr MODIFY COLUMN ssn varchar(50) key;
+Query OK, 0 rows affected (0.0183 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/c.csv' INTO TABLE hr FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+Query OK, 5000 rows affected (0.1095 sec)
+
+Records: 5000  Deleted: 0  Skipped: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  human_resources  SQL > select * from hr limit 100;
++--------+-------------+------------+----------------+------------+--------+---------------------------------+----------------------+---------------------+--------------------+---------------+---------------+------------+---------------+-----------------+--------------------+----------------+-----------------+-----------------+-----------------------+-------------+----------------+----------------+-----------+----------------------+--------+----------------------+-------------+--------------+------------------+----------------------+------------------+-------+-------+-----------+--------------+------------------+
+| emp_id | name_prefix | fisrt_name | middle_initial | last_name  | gender | e_mail                          | father_name          | mother_name         | mother_maiden_name | date_of_birth | time_of_birth | age_in_yrs | weight_in_kgs | date_of_joining | quarter_of_joining | half_of_joinig | year_of_joining | month_of_joinig | month_name_of_joining | short_month | day_of_joining | dow_of_joining | short_dow | age_in_company_years | salary | last_hike_percentage | ssn         | phone_no     | place_name       | country              | city             | state | zip   | region    | user_name    | password         |
++--------+-------------+------------+----------------+------------+--------+---------------------------------+----------------------+---------------------+--------------------+---------------+---------------+------------+---------------+-----------------+--------------------+----------------+-----------------+-----------------+-----------------------+-------------+----------------+----------------+-----------+----------------------+--------+----------------------+-------------+--------------+------------------+----------------------+------------------+-------+-------+-----------+--------------+------------------+
+| 851647 | Drs.        | Bebe       | R              | Archibald  | F      | bebe.archibald@gmail.com        | Hugo Archibald       | Christeen Archibald | Pannell            | 32056         | 0.657048611   |         30 |            48 | 8/31/2016       | Q3                 | H2             |            2016 |               8 | August                | Aug         |             31 | Wednesday      | Wed       |                    1 |  79660 |                 0.25 | 001-11-2433 | 270-428-7462 | Carver           | Carver               | Carver           | KY    | 41409 | South     | brarchibald          |Q
+| 153156 | Drs.        | Verona     | G              | Kellogg    | F      | verona.kellogg@aol.com          | Charlie Kellogg      | Latrisha Kellogg    | Severson           | 7/26/1984     | 0.1246875     |         33 |            43 | 41283           | Q3                 | H2             |            2013 |               9 | September             | Sep         |              1 | Sunday         | Sun       |                    4 |  43482 |                 0.04 | 001-11-5293 | 252-245-6161 | Sylva            | Jackson              | Sylva            | NC    | 28779 | South     | vgkellogg       |10c}emDrl{/
+| 492478 | Ms.         | Jerilyn    | H              | Will       | F      | jerilyn.will@bellsouth.net      | Vincent Will         | Jeanine Will        | Jimenez            | 25750         | 0.269189815   |         48 |            52 | 41651           | Q4                 | H2             |            2014 |              12 | December              | Dec         |              1 | Monday         | Mon       |                    3 | 187408 |                 0.14 | 001-11-6303 | 240-427-6220 | Baltimore        | Baltimore (city)     | Baltimore        | MD    | 21215 | South     | jhwill          |@.;7L0xLLmy
+| 917722 | Drs.        | Darcey     | M              | Holly      | F      | darcey.holly@hotmail.com        | Brendon Holly        | Enda Holly          | Sellers            | 10/18/1966    | 0.790162037   |         51 |            56 | 40360           | Q1                 | H1             |            2010 |               1 | January               | Jan         |              7 | Thursday       | Thu       |                    8 | 158146 |                 0.03 | 001-11-8193 | 206-313-8767 | Everett          | Snohomish            | Everett          | WA    | 98208 | West      | dmholly              |7
+| 577063 | Prof.       | Noble      | P              | Neuman     | M      | noble.neuman@outlook.com        | Pat Neuman           | Simone Neuman       | Thurman            | 4/27/1983     | 0.555115741   |         34 |            63 | 40725           | Q1                 | H1             |            2011 |               1 | January               | Jan         |              7 | Friday         | Fri       |                    7 |  67852 |                 0.06 | 001-11-9357 | 210-327-7205 | Refugio          | Refugio              | Refugio          | TX    | 78377 | South     | npneuman      |8fc<jrkuaA&$Ql!
+| 929275 | Mr.         | Trenton    | F              | Calderon   | M      | trenton.calderon@gmail.com      | Timothy Calderon     | Meda Calderon       | Riddick            | 34526         | 0.501064815   |         23 |            76 | 12/22/2015      | Q4                 | H2             |            2015 |              12 | December              | Dec         |             22 | Tuesday        | Tue       |                    2 | 171163 |                 0.26 | 002-11-0624 | 218-733-7827 | Saint Paul       | Ramsey               | Saint Paul       | MN    | 55114 | Midwest   | tfcalderon    |50+V-H9e/6$QC*/
+| 398381 | Mrs.        | Katharyn   | D              | Jaynes     | F      | katharyn.jaynes@yahoo.com       | Damien Jaynes        | Essie Jaynes        | Rinaldi            | 30630         | 0.262268519   |         34 |            52 | 7/14/2017       | Q3                 | H2             |            2017 |               7 | July                  | Jul         |             14 | Friday         | Fri       |                    0 | 132950 |                 0.03 | 002-11-1161 | 210-680-6100 | Wichita Falls    | Wichita              | Wichita Falls    | TX    | 76306 | South     | kdjaynes            |xxJ
+| 695969 | Mr.         | Bennett    | O              | Lam        | M      | bennett.lam@gmail.com           | Timothy Lam          | Raylene Lam         | Whitworth          | 2/26/1964     | 0.596053241   |         53 |            74 | 38172           | Q2                 | H1             |            2004 |               4 | April                 | Apr         |              7 | Wednesday      | Wed       |                   13 | 149685 |                 0.29 | 002-11-2021 | 239-387-9592 | Orlando          | Orange               | Orlando          | FL    | 32860 | South     | bolam           |hT$.I?Pxhdk
+| 588252 | Dr.         | Stewart    | Z              | Knapp      | M      | stewart.knapp@cox.net           | Casey Knapp          | Francine Knapp      | Vue                | 33911         | 0.199224537   |         25 |            83 | 42923           | Q3                 | H2             |            2017 |               7 | July                  | Jul         |              7 | Friday         | Fri       |                    0 |  66072 |                 0.25 | 002-11-2223 | 216-781-7648 | Hamilton         | Butler               | Hamilton         | OH    | 45020 | Midwest   | szknapp            |@/n!^
+| 995771 | Drs.        | Ming       | S              | Steffen    | F      | ming.steffen@aol.com            | Jayson Steffen       | Hermina Steffen     | Gooch              | 1/18/1966     | 0.43099537    |         52 |            60 | 38364           | Q4                 | H2             |            2005 |              12 | December              | Dec         |              1 | Thursday       | Thu       |                   12 |  97316 |                 0.09 | 002-11-7788 | 308-557-7386 | Snyder           | Dodge                | Snyder           | NE    | 68664 | Midwest   | mssteffen         |+ds]zh_
+| 223279 | Ms.         | Jaimie     | B              | Bolling    | F      | jaimie.bolling@aol.com          | Marcelino Bolling    | Arthur Bolling      | Sorensen           | 12/16/1960    | 0.512951389   |         57 |            51 | 5/29/1982       | Q2                 | H1             |            1982 |               5 | May                   | May         |             29 | Saturday       | Sat       |                   35 |  92447 |                 0.29 | 002-11-8106 | 210-791-6315 | El Paso          | El Paso              | El Paso          | TX    | 79901 | South     | jbbolling            |_
+| 280248 | Dr.         | Ollie      | N              | Lebron     | M      | ollie.lebron@charter.net        | Brain Lebron         | Misha Lebron        | Yang               | 24844         | 0.618391204   |         49 |            76 | 39823           | Q4                 | H2             |            2009 |              10 | October               | Oct         |              1 | Thursday       | Thu       |                    8 | 106764 |                 0.22 | 002-11-8499 | 210-578-3659 | El Paso          | El Paso              | El Paso          | TX    | 79930 | South     | onlebron           |_W8{n
+| 390131 | Ms.         | Jina       | N              | Grice      | F      | jina.grice@gmail.com            | Emerson Grice        | Eliana Grice        | Griffiths          | 10/19/1989    | 0.569641204   |         28 |            56 | 42191           | Q2                 | H1             |            2015 |               6 | June                  | Jun         |              7 | Sunday         | Sun       |                    2 | 153560 |                 0.10 | 003-08-0035 | 216-516-7561 | Cortland         | Trumbull             | Cortland         | OH    | 44410 | Midwest   | jngrice           |MW{ol:K
+| 403311 | Mrs.        | Lang       | O              | Christmas  | F      | lang.christmas@yahoo.com        | Numbers Christmas    | Sanora Christmas    | Marra              | 27434         | 0.506967593   |         42 |            52 | 37664           | Q4                 | H2             |            2003 |              12 | December              | Dec         |              2 | Tuesday        | Tue       |                   14 | 188399 |                 0.29 | 003-08-0040 | 339-342-6037 | South Hadley     | Hampshire            | South Hadley     | MA    | 1075  | Northeast | lochristmas          |j
+| 283392 | Hon.        | Sanda      | K              | Caro       | F      | sanda.caro@gmail.com            | Elbert Caro          | Angelina Caro       | Newby              | 5/31/1992     | 0.180694444   |         25 |            40 | 42036           | Q1                 | H1             |            2015 |               1 | January               | Jan         |              2 | Friday         | Fri       |                    3 | 165626 |                 0.30 | 003-08-0991 | 228-990-8936 | Rose Hill        | Jasper               | Rose Hill        | MS    | 39356 | South     | skcaro        |F5/dBP/;8ut36KZ
+| 908756 | Ms.         | Kit        | T              | Lawson     | F      | kit.lawson@gmail.com            | Rigoberto Lawson     | Anthony Lawson      | Gamble             | 11/28/1979    | 0.089375      |         38 |            53 | 8/16/2002       | Q3                 | H2             |            2002 |               8 | August                | Aug         |             16 | Friday         | Fri       |                   15 | 102181 |                 0.12 | 003-08-2200 | 339-690-1111 | South Egremont   | Berkshire            | South Egremont   | MA    | 1258  | Northeast | ktlawson           |_iC.i
+| 131132 | Mr.         | Bret       | B              | Grenier    | M      | bret.grenier@gmail.com          | Chris Grenier        | Evalyn Grenier      | Christian          | 2/18/1995     | 0.477199074   |         22 |            67 | 2/13/2016       | Q1                 | H1             |            2016 |               2 | February              | Feb         |             13 | Saturday       | Sat       |                    1 |  81222 |                 0.16 | 003-08-2651 | 215-356-4053 | Jamestown        | Mercer               | Jamestown        | PA    | 16134 | Northeast | bbgrenier     |xdcF-HUO/EX[WHf
+| 923147 | Mrs.        | Kaitlin    | V              | Damon      | F      | kaitlin.damon@yahoo.com         | Bernie Damon         | Ludie Damon         | Kilgore            | 24323         | 0.035266204   |         51 |            46 | 9/26/1987       | Q3                 | H2             |            1987 |               9 | September             | Sep         |             26 | Saturday       | Sat       |                   30 |  65235 |                 0.15 | 003-08-6557 | 210-947-9789 | Tyler            | Smith                | Tyler            | TX    | 75711 | South     | kvdamon             |KWW
+| 979831 | Hon.        | Justin     | W              | Scholl     | M      | justin.scholl@comcast.net       | Nathan Scholl        | Kara Scholl         | Daley              | 5/26/1993     | 0.959953704   |         24 |            62 | 42707           | Q1                 | H1             |            2016 |               3 | March                 | Mar         |             12 | Saturday       | Sat       |                    1 | 176679 |                 0.30 | 003-08-7128 | 219-229-6967 | Young America    | Cass                 | Young America    | IN    | 46998 | Midwest   | jwscholl      |E&$H^RaJ6.3/{Jq
+| 530503 | Ms.         | Tierra     | C              | Flournoy   | F      | tierra.flournoy@charter.net     | Ferdinand Flournoy   | Lynda Flournoy      | Simons             | 25023         | 0.686840278   |         49 |            52 | 33702           | Q3                 | H2             |            1992 |               8 | August                | Aug         |              4 | Tuesday        | Tue       |                   25 | 140385 |                 0.29 | 003-08-9311 | 229-546-0711 | Bartow           | Jefferson            | Bartow           | GA    | 30413 | South     | tcflournoy      |eaEEoO9AT}4
+| 208889 | Mr.         | Cyrus      | D              | Bagley     | M      | cyrus.bagley@aol.com            | Alfonso Bagley       | Carma Bagley        | Bertram            | 21855         | 0.18806713    |         59 |            90 | 6/29/1988       | Q2                 | H1             |            1988 |               6 | June                  | Jun         |             29 | Wednesday      | Wed       |                   29 | 154809 |                 0.26 | 003-08-9790 | 209-208-1530 | Eldridge         | Sonoma               | Eldridge         | CA    | 95431 | West      | cdbagley          |d]lAyZ-
+| 270804 | Mrs.        | Retha      | U              | Shaw       | F      | retha.shaw@hotmail.com          | Domenic Shaw         | Devin Shaw          | Guzman             | 31939         | 0.10443287    |         30 |            42 | 8/25/2015       | Q3                 | H2             |            2015 |               8 | August                | Aug         |             25 | Tuesday        | Tue       |                    2 |  55587 |                 0.24 | 004-13-1138 | 210-632-2512 | Lubbock          | Lubbock              | Lubbock          | TX    | 79405 | South     | rushaw               |c
+| 256026 | Mrs.        | Maxie      | O              | Herzog     | F      | maxie.herzog@gmail.com          | Louie Herzog         | Eartha Herzog       | Edmonds            | 2/29/1988     | 0.80255787    |         29 |            42 | 40517           | Q2                 | H1             |            2010 |               5 | May                   | May         |             12 | Wednesday      | Wed       |                    7 |  70036 |                 0.28 | 004-13-3146 | 270-430-8046 | Beattyville      | Lee                  | Beattyville      | KY    | 41311 | South     | moherzog            |YjO
+| 431097 | Mr.         | Porter     | U              | Tharp      | M      | porter.tharp@hotmail.co.uk      | Charles Tharp        | Edith Tharp         | Schaffer           | 7/21/1994     | 0.531006944   |         23 |            50 | 10/13/2016      | Q4                 | H2             |            2016 |              10 | October               | Oct         |             13 | Thursday       | Thu       |                    1 |  80826 |                 0.05 | 004-13-3541 | 405-458-4673 | Ponca City       | Kay                  | Ponca City       | OK    | 74604 | South     | putharp           |Qyn7>8]
+| 434804 | Mr.         | Dorian     | I              | Baines     | M      | dorian.baines@ntlworld.com      | Paris Baines         | Joleen Baines       | Ashcraft           | 5/29/1986     | 0.876111111   |         31 |            70 | 6/13/2013       | Q2                 | H1             |            2013 |               6 | June                  | Jun         |             13 | Thursday       | Thu       |                    4 |  49535 |                 0.03 | 004-13-7043 | 209-849-9941 | Shaver Lake      | Fresno               | Shaver Lake      | CA    | 93664 | West      | dibaines      |qi<{8ydo*H}@66H
+| 381822 | Mr.         | Jerald     | C              | Ochoa      | M      | jerald.ochoa@cox.net            | Bryan Ochoa          | Neva Ochoa          | Flannery           | 2/18/1995     | 0.7115625     |         22 |            87 | 4/16/2017       | Q2                 | H1             |            2017 |               4 | April                 | Apr         |             16 | Sunday         | Sun       |                    0 | 110380 |                 0.15 | 004-13-9064 | 304-948-4772 | Huntington       | Cabell               | Huntington       | WV    | 25706 | South     | jcochoa       |yb@*D9Il~T.?F+D
+| 169851 | Dr.         | Vance      | W              | Dubois     | M      | vance.dubois@gmail.com          | Alonso Dubois        | Elwanda Dubois      | Anderson           | 3/13/1966     | 0.356365741   |         51 |            59 | 9/15/2016       | Q3                 | H2             |            2016 |               9 | September             | Sep         |             15 | Thursday       | Thu       |                    1 |  61678 |                 0.18 | 005-13-0311 | 236-566-7251 | Burkeville       | Nottoway             | Burkeville       | VA    | 23922 | South     | vwdubois       |;C33rP8jkgt.$
+| 224388 | Mrs.        | Setsuko    | H              | Solano     | F      | setsuko.solano@gmail.com        | Ira Solano           | Carla Solano        | Bryson             | 12/31/1991    | 0.348460648   |         26 |            55 | 42494           | Q2                 | H1             |            2016 |               4 | April                 | Apr         |              5 | Tuesday        | Tue       |                    1 |  41914 |                 0.14 | 005-13-1107 | 252-705-5797 | Bolton           | Columbus             | Bolton           | NC    | 28423 | South     | shsolano         |n8Bqcc9eY
+| 935891 | Mr.         | Jarod      | A              | Lankford   | M      | jarod.lankford@hotmail.com      | Ira Lankford         | Son Lankford        | Dale               | 8/18/1975     | 0.482916667   |         42 |            88 | 9/30/2011       | Q3                 | H2             |            2011 |               9 | September             | Sep         |             30 | Friday         | Fri       |                    6 | 199908 |                 0.26 | 005-13-1706 | 231-277-2391 | Kinde            | Huron                | Kinde            | MI    | 48445 | Midwest   | jalankford    |W1@oUG$.2kYD]z2
+| 574192 | Mr.         | Moises     | K              | Webber     | M      | moises.webber@yahoo.com         | Yong Webber          | Jong Webber         | Shannon            | 12/25/1992    | 0.749814815   |         25 |            88 | 41673           | Q1                 | H1             |            2014 |               3 | March                 | Mar         |              2 | Sunday         | Sun       |                    3 |  93429 |                 0.28 | 005-13-3528 | 252-649-6098 | Rocky Point      | Pender               | Rocky Point      | NC    | 28457 | South     | mkwebber        |[xE0bm~<vmf
+| 349818 | Mrs.        | Leonila    | S              | Tinker     | F      | leonila.tinker@yahoo.co.in      | Armando Tinker       | Krystal Tinker      | Tan                | 28831         | 0.199201389   |         39 |            49 | 2/21/2006       | Q1                 | H1             |            2006 |               2 | February              | Feb         |             21 | Tuesday        | Tue       |                   11 | 100386 |                 0.00 | 005-13-6758 | 701-658-6487 | Grand Forks      | Grand Forks          | Grand Forks      | ND    | 58207 | Midwest   | lstinker      |FgH9GmO@G6QlKUn
+| 150126 | Hon.        | Santiago   | J              | Piazza     | M      | santiago.piazza@hotmail.com     | Dane Piazza          | Sixta Piazza        | Hooker             | 28405         | 0.834675926   |         40 |            75 | 10/26/2012      | Q4                 | H2             |            2012 |              10 | October               | Oct         |             26 | Friday         | Fri       |                    5 | 169578 |                 0.15 | 005-13-7474 | 208-762-0778 | American Falls   | Power                | American Falls   | ID    | 83211 | West      | sjpiazza        |<mBp7Iv0b@n
+| 909018 | Mr.         | Virgil     | R              | Trowbridge | M      | virgil.trowbridge@aol.com       | Francisco Trowbridge | Chasidy Trowbridge  | Soto               | 31567         | 0.210150463   |         31 |            73 | 11/21/2016      | Q4                 | H2             |            2016 |              11 | November              | Nov         |             21 | Monday         | Mon       |                    1 | 199714 |                 0.11 | 005-13-9026 | 202-652-7351 | Washington       | District of Columbia | Washington       | DC    | 20242 | South     | vrtrowbridge  |3PE>x:gOp<AY5jN
+| 788970 | Mrs.        | Katerine   | U              | Martell    | F      | katerine.martell@aol.com        | Les Martell          | Lanita Martell      | Mallard            | 27403         | 0.495914352   |         42 |            59 | 11/13/2012      | Q4                 | H2             |            2012 |              11 | November              | Nov         |             13 | Tuesday        | Tue       |                    5 | 169443 |                 0.05 | 006-11-4515 | 212-544-9248 | Dover Plains     | Dutchess             | Dover Plains     | NY    | 12522 | Northeast | kumartell            |n
+| 683424 | Mr.         | Aldo       | A              | Fields     | M      | aldo.fields@aol.com             | Johnathon Fields     | Williemae Fields    | Houston            | 1/26/1963     | 0.191631944   |         55 |            61 | 2/13/2013       | Q1                 | H1             |            2013 |               2 | February              | Feb         |             13 | Wednesday      | Wed       |                    4 | 120894 |                 0.04 | 006-11-7118 | 239-671-9742 | Tampa            | Hillsborough         | Tampa            | FL    | 33651 | South     | aafields        |];6GM8*LQn:
+| 395666 | Mr.         | Johnson    | R              | Hitt       | M      | johnson.hitt@outlook.com        | Elias Hitt           | Megan Hitt          | Alba               | 10/13/1980    | 0.552974537   |         37 |            50 | 11/24/2016      | Q4                 | H2             |            2016 |              11 | November              | Nov         |             24 | Thursday       | Thu       |                    1 |  50757 |                 0.03 | 006-11-8392 | 252-286-1302 | Greensboro       | Guilford             | Greensboro       | NC    | 27413 | South     | jrhitt             |;Plt7
+| 775444 | Hon.        | Devin      | U              | Breen      | F      | devin.breen@gmail.com           | Dwight Breen         | Natasha Breen       | Wong               | 11/20/1958    | 0.548217593   |         59 |            41 | 12/22/1990      | Q4                 | H2             |            1990 |              12 | December              | Dec         |             22 | Saturday       | Sat       |                   27 |  44010 |                 0.00 | 007-11-3582 | 239-543-0559 | Saint Petersburg | Pinellas             | Saint Petersburg | FL    | 33716 | South     | dubreen             |JfI
+| 359943 | Ms.         | Vanessa    | Z              | Justus     | F      | vanessa.justus@yahoo.com        | Antonio Justus       | Gianna Justus       | Fierro             | 9/19/1994     | 0.300543981   |         23 |            52 | 42524           | Q1                 | H1             |            2016 |               3 | March                 | Mar         |              6 | Sunday         | Sun       |                    1 |  82003 |                 0.28 | 007-11-8161 | 304-927-9933 | Huntington       | Cabell               | Huntington       | WV    | 25707 | South     | vzjustus             |m
+| 910495 | Drs.        | Alexander  | I              | Franklin   | F      | alexander.franklin@yahoo.com    | Neville Franklin     | Gregory Franklin    | Latham             | 3/15/1982     | 0.757800926   |         35 |            44 | 2/14/2015       | Q1                 | H1             |            2015 |               2 | February              | Feb         |             14 | Saturday       | Sat       |                    2 | 190356 |                 0.18 | 007-11-8320 | 231-858-3811 | Livonia          | Wayne                | Livonia          | MI    | 48151 | Midwest   | aifranklin     |/brqT%@pRAcm;
+| 814992 | Ms.         | Majorie    | T              | Thiel      | F      | majorie.thiel@gmail.com         | Royal Thiel          | Cathie Thiel        | Crowley            | 5/24/1995     | 0.337222222   |         22 |            58 | 10/29/2016      | Q4                 | H2             |            2016 |              10 | October               | Oct         |             29 | Saturday       | Sat       |                    1 | 139796 |                 0.05 | 007-11-9622 | 210-842-5751 | Tyler            | Smith                | Tyler            | TX    | 75705 | South     | mtthiel              |c
+| 127746 | Dr.         | Hai        | N              | Moses      | M      | hai.moses@msn.com               | Vernon Moses         | Loretta Moses       | Esposito           | 26034         | 0.185659722   |         46 |            80 | 37354           | Q3                 | H2             |            2002 |               8 | August                | Aug         |              4 | Sunday         | Sun       |                   15 | 161521 |                 0.26 | 008-94-1979 | 229-292-2597 | Rex              | Clayton              | Rex              | GA    | 30273 | South     | hnmoses           |^&yU>VT
+| 759808 | Mrs.        | Teodora    | T              | Cortez     | F      | teodora.cortez@gmail.com        | Gaylord Cortez       | Jason Cortez        | Delaney            | 35013         | 0.017314815   |         22 |            46 | 42563           | Q4                 | H2             |            2016 |              12 | December              | Dec         |              7 | Wednesday      | Wed       |                    1 | 110448 |                 0.18 | 008-94-2353 | 203-482-7605 | Norwalk          | Fairfield            | Norwalk          | CT    | 6855  | Northeast | ttcortez           |ryY9s
+| 336870 | Ms.         | Lucille    | U              | Culpepper  | F      | lucille.culpepper@gmail.com     | Wilson Culpepper     | Keren Culpepper     | Ferro              | 8/24/1969     | 0.107175926   |         48 |            57 | 11/23/2016      | Q4                 | H2             |            2016 |              11 | November              | Nov         |             23 | Wednesday      | Wed       |                    1 | 153456 |                 0.17 | 008-94-3733 | 236-980-0389 | Hurt             | Pittsylvania         | Hurt             | VA    | 24563 | South     | luculpepper        |WB:ZD
+| 891136 | Mr.         | Ira        | U              | Winslow    | M      | ira.winslow@gmail.com           | Mike Winslow         | Mika Winslow        | Douglass           | 34641         | 0.289039352   |         23 |            80 | 42620           | Q3                 | H2             |            2016 |               7 | July                  | Jul         |              9 | Saturday       | Sat       |                    1 |  97857 |                 0.10 | 008-94-3828 | 218-956-4034 | Duluth           | St. Louis            | Duluth           | MN    | 55806 | Midwest   | iuwinslow       |9INl|S5e@TM
+| 500905 | Hon.        | Harris     | Z              | Beavers    | M      | harris.beavers@shell.com        | Henry Beavers        | Birgit Beavers      | Mcinnis            | 9/14/1970     | 0.552673611   |         47 |            87 | 1/29/1999       | Q1                 | H1             |            1999 |               1 | January               | Jan         |             29 | Friday         | Fri       |                   19 | 147337 |                 0.14 | 008-94-7794 | 239-294-7204 | Brandon          | Hillsborough         | Brandon          | FL    | 33511 | South     | hzbeavers            |p
+| 203803 | Mr.         | Napoleon   | V              | Danforth   | M      | napoleon.danforth@yahoo.com     | Jeff Danforth        | Christel Danforth   | Hoffman            | 11/13/1985    | 0.180266204   |         32 |            80 | 3/22/2012       | Q1                 | H1             |            2012 |               3 | March                 | Mar         |             22 | Thursday       | Thu       |                    5 | 181716 |                 0.23 | 008-94-8703 | 503-535-7506 | Imbler           | Union                | Imbler           | OR    | 97841 | West      | nvdanforth      |PII;j4K3K+u
+| 388655 | Dr.         | Royal      | P              | Armstead   | M      | royal.armstead@yahoo.co.in      | Rex Armstead         | Mitzie Armstead     | Silas              | 8/31/1964     | 0.629618056   |         53 |            88 | 34339           | Q2                 | H1             |            1994 |               5 | May                   | May         |              1 | Sunday         | Sun       |                   23 | 123704 |                 0.17 | 008-94-9519 | 212-694-2992 | Springwater      | Livingston           | Springwater      | NY    | 14560 | Northeast | rparmstead    |xt2b$<eOTLZ;152
+| 414100 | Hon.        | Refugio    | D              | Cuellar    | M      | refugio.cuellar@yahoo.co.in     | Santos Cuellar       | Steffanie Cuellar   | Rohr               | 3/16/1989     | 0.041226852   |         28 |            50 | 42280           | Q1                 | H1             |            2015 |               3 | March                 | Mar         |             10 | Tuesday        | Tue       |                    2 | 199486 |                 0.01 | 009-94-1263 | 239-384-1997 | Palm Coast       | Flagler              | Palm Coast       | FL    | 32137 | South     | rdcuellar          |~SYkp
+| 423011 | Ms.         | Margherita | Z              | Fay        | F      | margherita.fay@gmail.com        | Bart Fay             | Leonor Fay          | Callahan           | 1/14/1976     | 0.671481481   |         42 |            52 | 39668           | Q3                 | H2             |            2008 |               8 | August                | Aug         |              8 | Friday         | Fri       |                    9 | 178824 |                 0.20 | 009-94-3108 | 314-292-2127 | Vichy            | Maries               | Vichy            | MO    | 65580 | Midwest   | mzfay             |KELvZDr
+| 960302 | Drs.        | Charissa   | Y              | Noonan     | F      | charissa.noonan@gmail.com       | Mariano Noonan       | Katharina Noonan    | Nowlin             | 23262         | 0.206886574   |         54 |            50 | 42011           | Q3                 | H2             |            2015 |               7 | July                  | Jul         |              1 | Wednesday      | Wed       |                    2 |  61024 |                 0.05 | 009-94-3390 | 308-314-8291 | Allen            | Dixon                | Allen            | NE    | 68710 | Midwest   | cynoonan           |Ot1~J
+| 781241 | Dr.         | Virgilio   | M              | Phillip    | M      | virgilio.phillip@btinternet.com | Isidro Phillip       | Gretchen Phillip    | Nye                | 12/20/1989    | 0.607662037   |         28 |            69 | 42258           | Q4                 | H2             |            2015 |              11 | November              | Nov         |              9 | Monday         | Mon       |                    2 | 142583 |                 0.26 | 009-94-3896 | 209-565-4813 | Newport Beach    | Orange               | Newport Beach    | CA    | 92659 | West      | vmphillip          |4#$p~
+| 731322 | Mrs.        | Saturnina  | F              | Cintron    | F      | saturnina.cintron@yahoo.com     | Carol Cintron        | Ina Cintron         | Bliss              | 23469         | 0.874918981   |         54 |            58 | 35189           | Q2                 | H1             |            1996 |               4 | April                 | Apr         |              5 | Friday         | Fri       |                   21 | 132460 |                 0.22 | 009-94-4026 | 239-240-4164 | Seffner          | Hillsborough         | Seffner          | FL    | 33583 | South     | sfcintron          |pBHpL
+| 758862 | Mrs.        | Alisia     | R              | Couture    | F      | alisia.couture@outlook.com      | Jefferey Couture     | Joaquina Couture    | Franz              | 32331         | 0.730451389   |         29 |            47 | 8/29/2011       | Q3                 | H2             |            2011 |               8 | August                | Aug         |             29 | Monday         | Mon       |                    6 | 134526 |                 0.06 | 009-94-7703 | 303-449-8555 | Montrose         | Montrose             | Montrose         | CO    | 81402 | West      | arcouture           |v*F
+| 908096 | Prof.       | Arlen      | G              | Pedroza    | M      | arlen.pedroza@gmail.com         | Kenton Pedroza       | Luisa Pedroza       | Flannery           | 10/22/1958    | 0.616053241   |         59 |            55 | 9/13/1995       | Q3                 | H2             |            1995 |               9 | September             | Sep         |             13 | Wednesday      | Wed       |                   22 |  46075 |                 0.20 | 009-94-8853 | 218-829-5421 | Kelly Lake       | Kelly Lake           | Kelly Lake       | MN    | 55754 | Midwest   | agpedroza          |ts?i_
+| 770782 | Mr.         | Jaime      | W              | Sylvester  | M      | jaime.sylvester@gmail.com       | Dylan Sylvester      | Marcia Sylvester    | Harry              | 8/16/1980     | 0.454768519   |         37 |            80 | 1/19/2003       | Q1                 | H1             |            2003 |               1 | January               | Jan         |             19 | Sunday         | Sun       |                   15 | 191863 |                 0.13 | 009-94-9955 | 208-856-9871 | Tetonia          | Teton                | Tetonia          | ID    | 83452 | West      | jwsylvester       |F-mV;25
+| 353117 | Mr.         | Deon       | K              | Heath      | M      | deon.heath@gmail.com            | Hilario Heath        | Jule Heath          | Waterman           | 21678         | 0.224097222   |         58 |            87 | 6/20/2001       | Q2                 | H1             |            2001 |               6 | June                  | Jun         |             20 | Wednesday      | Wed       |                   16 |  65276 |                 0.03 | 010-94-4764 | 252-580-6674 | Harris           | Rutherford           | Harris           | NC    | 28074 | South     | dkheath              |q
+| 581064 | Prof.       | Isaias     | E              | Wood       | M      | isaias.wood@exxonmobil.com      | Scottie Wood         | Alex Wood           | Sellers            | 5/13/1984     | 0.951631944   |         33 |            66 | 41187           | Q2                 | H1             |            2012 |               5 | May                   | May         |             10 | Thursday       | Thu       |                    5 |  54636 |                 0.29 | 010-94-5695 | 303-890-4668 | San Pablo        | Costilla             | San Pablo        | CO    | 81153 | West      | iewood        |3V_}50^<mZ:R@$G
+| 220626 | Mr.         | Andrea     | J              | Rupert     | M      | andrea.rupert@shell.com         | Cristobal Rupert     | Classie Rupert      | Seals              | 7/14/1978     | 0.723344907   |         39 |            59 | 2/13/2015       | Q1                 | H1             |            2015 |               2 | February              | Feb         |             13 | Friday         | Fri       |                    2 |  75007 |                 0.18 | 010-94-7677 | 505-237-2102 | Lamy             | Santa Fe             | Lamy             | NM    | 87540 | West      | ajrupert           |Z5/@V
+| 539685 | Mr.         | Barney     | D              | Peek       | M      | barney.peek@gmail.com           | Lindsay Peek         | Azalee Peek         | Peacock            | 22192         | 0.339664352   |         57 |            75 | 9/29/2007       | Q3                 | H2             |            2007 |               9 | September             | Sep         |             29 | Saturday       | Sat       |                   10 | 124772 |                 0.26 | 010-94-9818 | 209-956-1274 | Chico            | Butte                | Chico            | CA    | 95973 | West      | bdpeek               |>
+| 448880 | Drs.        | Sherly     | T              | Mercado    | F      | sherly.mercado@rediffmail.com   | Andres Mercado       | Karan Mercado       | Gragg              | 3/20/1969     | 0.177511574   |         48 |            59 | 34040           | Q4                 | H2             |            1993 |              12 | December              | Dec         |              3 | Friday         | Fri       |                   24 | 193281 |                 0.13 | 011-94-0732 | 210-476-9698 | Round Rock       | Williamson           | Round Rock       | TX    | 78682 | South     | stmercado           |@2x
+| 241168 | Dr.         | Daron      | H              | Styles     | M      | daron.styles@gmail.com          | Rayford Styles       | Dorcas Styles       | Quiroz             | 29777         | 0.842858796   |         36 |            58 | 1/29/2017       | Q1                 | H1             |            2017 |               1 | January               | Jan         |             29 | Sunday         | Sun       |                    0 | 104002 |                 0.14 | 011-94-3251 | 209-385-2584 | Redway           | Humboldt             | Redway           | CA    | 95560 | West      | dhstyles          |UjVc+jh
+| 598605 | Mr.         | Raymundo   | A              | Dale       | M      | raymundo.dale@outlook.com       | Jean Dale            | Valentina Dale      | Duncan             | 8/25/1981     | 0.803831019   |         36 |            66 | 40583           | Q3                 | H2             |            2011 |               9 | September             | Sep         |              2 | Friday         | Fri       |                    6 |  64679 |                 0.27 | 011-94-4166 | 215-562-9570 | Wayne            | Delaware             | Wayne            | PA    | 19087 | Northeast | radale               |b
+| 674514 | Mr.         | Lanny      | D              | Wahl       | M      | lanny.wahl@gmail.com            | Darren Wahl          | Genoveva Wahl       | Clement            | 6/16/1971     | 0.537175926   |         46 |            81 | 42617           | Q2                 | H1             |            2016 |               4 | April                 | Apr         |              9 | Saturday       | Sat       |                    1 | 133084 |                 0.26 | 011-94-6420 | 603-338-0958 | Winchester       | Cheshire             | Winchester       | NH    | 3470  | Northeast | ldwahl        |eFVx_TEB$K51L:s
+| 580489 | Ms.         | Alta       | N              | Westfall   | F      | alta.westfall@yahoo.com         | Bennett Westfall     | Solange Westfall    | Oneil              | 26980         | 0.679548611   |         44 |            52 | 2/22/1998       | Q1                 | H1             |            1998 |               2 | February              | Feb         |             22 | Sunday         | Sun       |                   19 | 115524 |                 0.29 | 011-94-7243 | 240-275-7677 | Gaithersburg     | Montgomery           | Gaithersburg     | MD    | 20898 | South     | anwestfall       |F[AJrqaDO
+| 269576 | Hon.        | Enrique    | K              | Pollock    | M      | enrique.pollock@gmail.com       | Buford Pollock       | Jacquiline Pollock  | Moultrie           | 3/30/1969     | 0.381354167   |         48 |            77 | 5/30/2005       | Q2                 | H1             |            2005 |               5 | May                   | May         |             30 | Monday         | Mon       |                   12 |  43168 |                 0.21 | 011-94-8644 | 304-573-2447 | Clio             | Roane                | Clio             | WV    | 25046 | South     | ekpollock        |Z&Mv}wm]s
+| 927190 | Mr.         | Sydney     | L              | Mello      | M      | sydney.mello@gmail.com          | Rigoberto Mello      | Lorrie Mello        | Betts              | 28185         | 0.503298611   |         41 |            88 | 39366           | Q4                 | H2             |            2007 |              11 | November              | Nov         |             10 | Saturday       | Sat       |                   10 | 126978 |                 0.05 | 012-94-1523 | 212-630-8459 | Fabius           | Onondaga             | Fabius           | NY    | 13063 | Northeast | slmello           |-fm0;sc
+| 873670 | Drs.        | Adele      | H              | Henson     | F      | adele.henson@rediffmail.com     | Leonardo Henson      | Leisha Henson       | Terry              | 29775         | 0.349189815   |         36 |            59 | 42044           | Q3                 | H2             |            2015 |               9 | September             | Sep         |              2 | Wednesday      | Wed       |                    2 | 103404 |                 0.07 | 012-94-2086 | 339-621-8782 | Whitinsville     | Worcester            | Whitinsville     | MA    | 1588  | Northeast | ahhenson          |NmH4e7}
+| 416097 | Ms.         | Bulah      | E              | Jarrell    | F      | bulah.jarrell@aol.com           | Joey Jarrell         | Nicolle Jarrell     | Andrews            | 11/14/1994    | 0.02244213    |         23 |            48 | 3/24/2016       | Q1                 | H1             |            2016 |               3 | March                 | Mar         |             24 | Thursday       | Thu       |                    1 | 142658 |                 0.22 | 012-94-3511 | 212-445-2240 | Elmhurst         | Queens               | Elmhurst         | NY    | 11373 | Northeast | bejarrell       |zMs|M{+f9[3
+| 528280 | Ms.         | Mackenzie  | G              | Galloway   | F      | mackenzie.galloway@ibm.com      | Jeffrey Galloway     | Ashlee Galloway     | Kellum             | 12/19/1983    | 0.527650463   |         34 |            50 | 42461           | Q1                 | H1             |            2016 |               1 | January               | Jan         |              4 | Monday         | Mon       |                    2 | 167387 |                 0.04 | 012-94-5342 | 225-737-1697 | Marrero          | Jefferson            | Marrero          | LA    | 70072 | South     | mggalloway         |A~JNf
+| 216967 | Mr.         | Korey      | S              | Painter    | M      | korey.painter@gmail.com         | Carlton Painter      | Brianna Painter     | Miranda            | 25759         | 0.748553241   |         47 |            67 | 38208           | Q3                 | H2             |            2004 |               9 | September             | Sep         |              8 | Wednesday      | Wed       |                   13 | 160911 |                 0.15 | 012-94-5558 | 205-259-7377 | Luverne          | Crenshaw             | Luverne          | AL    | 36049 | South     | kspainter         |ih@]R6]
+| 595400 | Prof.       | Bruno      | E              | Madsen     | M      | bruno.madsen@comcast.net        | Ed Madsen            | Melina Madsen       | Pruitt             | 6/14/1963     | 0.103171296   |         54 |            83 | 7/16/1991       | Q3                 | H2             |            1991 |               7 | July                  | Jul         |             16 | Tuesday        | Tue       |                   26 |  73467 |                 0.25 | 012-94-6002 | 308-538-0068 | Clarks           | Merrick              | Clarks           | NE    | 68628 | Midwest   | bemadsen            |pS:
+| 692171 | Hon.        | Marquis    | D              | Yoon       | M      | marquis.yoon@yahoo.com          | Tyree Yoon           | Ryan Yoon           | Dietz              | 11/23/1966    | 0.000648148   |         51 |            80 | 5/14/2002       | Q2                 | H1             |            2002 |               5 | May                   | May         |             14 | Tuesday        | Tue       |                   15 | 199788 |                 0.26 | 012-94-7616 | 228-454-3610 | Robinsonville    | Tunica               | Robinsonville    | MS    | 38664 | South     | mdyoon         |91GeYcXQV2YB#
+| 702032 | Mr.         | Stanton    | L              | Owens      | M      | stanton.owens@yahoo.com         | Minh Owens           | Dreama Owens        | Frierson           | 12/27/1970    | 0.679618056   |         47 |            68 | 11/14/2007      | Q4                 | H2             |            2007 |              11 | November              | Nov         |             14 | Wednesday      | Wed       |                   10 |  72255 |                 0.12 | 012-94-9062 | 210-559-5378 | Cedar Hill       | Dallas               | Cedar Hill       | TX    | 75104 | South     | slowens             |40p
+| 910839 | Mr.         | Bert       | W              | Stegall    | M      | bert.stegall@yahoo.com          | Lane Stegall         | Bev Stegall         | Thomson            | 29679         | 0.607893519   |         36 |            57 | 6/29/2008       | Q2                 | H1             |            2008 |               6 | June                  | Jun         |             29 | Sunday         | Sun       |                    9 |  41559 |                 0.13 | 013-94-1023 | 314-589-3872 | Dora             | Ozark                | Dora             | MO    | 65637 | Midwest   | bwstegall          |+S<[G
+| 860851 | Mrs.        | Marielle   | T              | Donato     | F      | marielle.donato@hotmail.com     | Lamar Donato         | Jame Donato         | Rizzo              | 5/14/1961     | 0.169409722   |         56 |            41 | 2/16/2011       | Q1                 | H1             |            2011 |               2 | February              | Feb         |             16 | Wednesday      | Wed       |                    6 | 107816 |                 0.05 | 013-94-2206 | 603-756-5086 | Sandown          | Rockingham           | Sandown          | NH    | 3873  | Northeast | mtdonato        |di*q&}mm+6]
+| 625460 | Mr.         | Barrett    | K              | Osborn     | M      | barrett.osborn@apple.com        | Damian Osborn        | Loreen Osborn       | Machado            | 33971         | 0.911226852   |         25 |            71 | 3/26/2015       | Q1                 | H1             |            2015 |               3 | March                 | Mar         |             26 | Thursday       | Thu       |                    2 |  42154 |                 0.16 | 014-94-1173 | 212-948-4071 | Freeport         | Nassau               | Freeport         | NY    | 11520 | Northeast | bkosborn         |_|6_$TRgV
+| 261363 | Prof.       | Andre      | N              | Orton      | M      | andre.orton@gmail.com           | Curtis Orton         | Kourtney Orton      | Gifford            | 29620         | 0.9690625     |         36 |            89 | 38573           | Q3                 | H2             |            2005 |               9 | September             | Sep         |              8 | Thursday       | Thu       |                   12 |  83799 |                 0.16 | 014-94-2671 | 202-499-1260 | Washington       | District of Columbia | Washington       | DC    | 20510 | South     | anorton          |:2]{e*u1j
+| 980544 | Mrs.        | Manda      | X              | Goldman    | F      | manda.goldman@charter.net       | Sanford Goldman      | Trudie Goldman      | Chappell           | 22650         | 0.894988426   |         55 |            53 | 34920           | Q3                 | H2             |            1995 |               9 | September             | Sep         |              8 | Friday         | Fri       |                   22 |  75347 |                 0.00 | 014-94-2905 | 308-661-4611 | Keystone         | Keith                | Keystone         | NE    | 69144 | Midwest   | mxgoldman          |+jIqz
+| 860486 | Mr.         | Gino       | J              | Soares     | M      | gino.soares@gmail.com           | Lamar Soares         | Renata Soares       | Mosier             | 31109         | 0.451168981   |         32 |            77 | 12/13/2010      | Q4                 | H2             |            2010 |              12 | December              | Dec         |             13 | Monday         | Mon       |                    7 |  81402 |                 0.19 | 014-94-2945 | 210-738-8757 | Fieldton         | Lamb                 | Fieldton         | TX    | 79326 | South     | gjsoares           |AAOsr
+| 354778 | Drs.        | Heidi      | Y              | Chastain   | F      | heidi.chastain@bp.com           | Man Chastain         | Thersa Chastain     | Ali                | 28621         | 0.522268519   |         39 |            56 | 41525           | Q3                 | H2             |            2013 |               8 | August                | Aug         |              9 | Friday         | Fri       |                    4 | 179257 |                 0.06 | 014-94-3142 | 405-624-5291 | Prague           | Lincoln              | Prague           | OK    | 74864 | South     | hychastain       |1BY1vV9d@
+| 898273 | Mr.         | Eugene     | K              | Redman     | M      | eugene.redman@gmail.com         | Britt Redman         | Terry Redman        | James              | 11/20/1994    | 0.004259259   |         23 |            53 | 42405           | Q2                 | H1             |            2016 |               5 | May                   | May         |              2 | Monday         | Mon       |                    1 | 157560 |                 0.28 | 014-94-4720 | 314-870-6123 | Saint Louis      | St. Louis            | Saint Louis      | MO    | 63128 | Midwest   | ekredman             |g
+| 454958 | Mr.         | Mack       | H              | Rose       | M      | mack.rose@aol.com               | Donnie Rose          | Remona Rose         | Nathan             | 26024         | 0.316631944   |         47 |            73 | 12/17/2008      | Q4                 | H2             |            2008 |              12 | December              | Dec         |             17 | Wednesday      | Wed       |                    9 |  86776 |                 0.03 | 014-94-5037 | 423-619-2112 | Hickory Withe    | Fayette              | Hickory Withe    | TN    | 38043 | South     | mhrose               |x
+| 710423 | Ms.         | Margorie   | Q              | Pace       | F      | margorie.pace@rediffmail.com    | Cesar Pace           | Ilona Pace          | Geary              | 10/21/1989    | 0.111180556   |         28 |            49 | 41307           | Q1                 | H1             |            2013 |               2 | February              | Feb         |              2 | Saturday       | Sat       |                    4 |  54523 |                 0.02 | 014-94-7236 | 316-254-6895 | Milton           | Sumner               | Milton           | KS    | 67106 | Midwest   | mqpace            |jb_dnW1
+| 429846 | Ms.         | Beaulah    | X              | Richards   | F      | beaulah.richards@yahoo.co.in    | Ivan Richards        | Krystyna Richards   | Bohn               | 30014         | 0.634456019   |         35 |            59 | 9/24/2014       | Q3                 | H2             |            2014 |               9 | September             | Sep         |             24 | Wednesday      | Wed       |                    3 | 111539 |                 0.13 | 014-94-8361 | 225-752-3356 | Garyville        | St. John the Baptist | Garyville        | LA    | 70051 | South     | bxrichards      |Hv?#D$NS}aB
+| 873433 | Mrs.        | Isabell    | U              | Joy        | F      | isabell.joy@sbcglobal.net       | Eddy Joy             | Carmelita Joy       | Mcqueen            | 11/17/1983    | 0.771458333   |         34 |            45 | 42287           | Q4                 | H2             |            2015 |              10 | October               | Oct         |             10 | Saturday       | Sat       |                    2 | 112087 |                 0.02 | 014-94-9564 | 206-487-5627 | Seaview          | Pacific              | Seaview          | WA    | 98644 | West      | iujoy               |hMF
+| 612667 | Prof.       | Ira        | I              | Spalding   | M      | ira.spalding@yahoo.ca           | Mohamed Spalding     | Danille Spalding    | Perry              | 30565         | 0.496180556   |         34 |            80 | 5/29/2008       | Q2                 | H1             |            2008 |               5 | May                   | May         |             29 | Thursday       | Thu       |                    9 | 164398 |                 0.22 | 014-94-9989 | 212-509-6049 | Atlanta          | Steuben              | Atlanta          | NY    | 14808 | Northeast | iispalding           |g
+| 242322 | Mr.         | Rosario    | J              | Bowers     | M      | rosario.bowers@gmail.com        | Ernest Bowers        | Angeles Bowers      | Choate             | 25215         | 0.324826389   |         48 |            83 | 11/20/1996      | Q4                 | H2             |            1996 |              11 | November              | Nov         |             20 | Wednesday      | Wed       |                   21 | 103976 |                 0.15 | 015-94-3562 | 218-316-6095 | Monticello       | Wright               | Monticello       | MN    | 55565 | Midwest   | rjbowers          |F/XUAH!
+| 129504 | Ms.         | Amada      | R              | Power      | F      | amada.power@bellsouth.net       | Thanh Power          | Lorie Power         | Houck              | 6/16/1961     | 0.973819444   |         56 |            57 | 41183           | Q1                 | H1             |            2012 |               1 | January               | Jan         |             10 | Tuesday        | Tue       |                    6 |  50929 |                 0.00 | 015-94-5056 | 205-430-5960 | Greenville       | Butler               | Greenville       | AL    | 36037 | South     | arpower             |l6L
+| 311332 | Mrs.        | Lauralee   | J              | Gee        | F      | lauralee.gee@yahoo.com          | Demarcus Gee         | Ronni Gee           | Rosenthal          | 21348         | 0.907847222   |         59 |            57 | 30530           | Q1                 | H1             |            1983 |               2 | February              | Feb         |              8 | Tuesday        | Tue       |                   34 | 107140 |                 0.23 | 015-94-5271 | 205-665-7027 | Hurtsboro        | Russell              | Hurtsboro        | AL    | 36860 | South     | ljgee                |-
+| 620653 | Mrs.        | Jenice     | T              | Gil        | F      | jenice.gil@hotmail.com          | Chong Gil            | Sun Gil             | Heinz              | 8/21/1976     | 0.879479167   |         41 |            55 | 3/27/1998       | Q1                 | H1             |            1998 |               3 | March                 | Mar         |             27 | Friday         | Fri       |                   19 | 152281 |                 0.24 | 015-94-5496 | 209-978-8296 | Hornitos         | Mariposa             | Hornitos         | CA    | 95325 | West      | jtgil           |:I!mK[.cKpD
+| 854390 | Prof.       | Toby       | Z              | Lima       | M      | toby.lima@aol.com               | Sammy Lima           | Emmy Lima           | Albert             | 24657         | 0.649293981   |         50 |            76 | 35282           | Q2                 | H1             |            1996 |               5 | May                   | May         |              8 | Wednesday      | Wed       |                   21 | 182132 |                 0.13 | 015-94-6210 | 339-362-2035 | Newburyport      | Essex                | Newburyport      | MA    | 1950  | Northeast | tzlima             |NlUs+
+| 431394 | Mr.         | Les        | U              | Blocker    | M      | les.blocker@cox.net             | Lindsay Blocker      | Lois Blocker        | Stark              | 29343         | 0.038356481   |         38 |            75 | 40401           | Q4                 | H2             |            2010 |              11 | November              | Nov         |              8 | Monday         | Mon       |                    7 |  91392 |                 0.27 | 015-94-9208 | 339-398-6837 | Boston           | Suffolk              | Boston           | MA    | 2205  | Northeast | lublocker          |S.*fq
+| 286965 | Drs.        | Kimberli   | N              | Ogden      | F      | kimberli.ogden@sbcglobal.net    | Dee Ogden            | Rochelle Ogden      | Lu                 | 4/13/1960     | 0.885763889   |         57 |            53 | 10/13/1991      | Q4                 | H2             |            1991 |              10 | October               | Oct         |             13 | Sunday         | Sun       |                   26 | 167270 |                 0.25 | 016-94-0891 | 203-863-0124 | Rocky Hill       | Hartford             | Rocky Hill       | CT    | 6067  | Northeast | knogden               |
+| 502388 | Ms.         | Delores    | E              | Woodworth  | F      | delores.woodworth@aol.com       | Dion Woodworth       | Shana Woodworth     | Simone             | 2/26/1964     | 0.847696759   |         53 |            60 | 32639           | Q4                 | H2             |            1989 |              11 | November              | Nov         |              5 | Sunday         | Sun       |                   28 |  69947 |                 0.11 | 016-94-2549 | 209-744-7960 | San Jose         | Santa Clara          | San Jose         | CA    | 95192 | West      | dewoodworth      |;!2wO|6;!
+| 698336 | Ms.         | Mable      | J              | Urban      | F      | mable.urban@yahoo.com           | Barton Urban         | Lilliana Urban      | Soto               | 7/20/1976     | 0.509143519   |         41 |            48 | 9/15/2001       | Q3                 | H2             |            2001 |               9 | September             | Sep         |             15 | Saturday       | Sat       |                   16 | 191151 |                 0.25 | 016-94-3305 | 316-806-8441 | Oskaloosa        | Jefferson            | Oskaloosa        | KS    | 66066 | Midwest   | mjurban         |i.eQ!09:d]T
+| 216326 | Dr.         | Tomas      | L              | Dewitt     | M      | tomas.dewitt@gmail.com          | Milo Dewitt          | Alesia Dewitt       | Kimmel             | 29925         | 0.202453704   |         36 |            75 | 5/14/2015       | Q2                 | H1             |            2015 |               5 | May                   | May         |             14 | Thursday       | Thu       |                    2 | 178354 |                 0.15 | 016-94-3656 | 252-433-4936 | Thurmond         | Wilkes               | Thurmond         | NC    | 28683 | South     | tldewitt        |tQ&^jAl1#IA
+| 125092 | Mrs.        | Tracy      | J              | Gragg      | F      | tracy.gragg@microsoft.com       | Randell Gragg        | Tynisha Gragg       | Roark              | 12/16/1987    | 0.244918981   |         30 |            60 | 41978           | Q2                 | H1             |            2014 |               5 | May                   | May         |             12 | Monday         | Mon       |                    3 |  67835 |                 0.16 | 016-94-4307 | 215-333-2059 | Klingerstown     | Schuylkill           | Klingerstown     | PA    | 17941 | Northeast | tjgragg          |uB[Er0$8H
+| 605100 | Mr.         | Elmer      | K              | Corrigan   | M      | elmer.corrigan@hotmail.co.uk    | Rafael Corrigan      | Naomi Corrigan      | Marino             | 21466         | 0.8184375     |         59 |            72 | 1/19/2000       | Q1                 | H1             |            2000 |               1 | January               | Jan         |             19 | Wednesday      | Wed       |                   18 | 147152 |                 0.11 | 016-94-4910 | 605-624-7154 | Utica            | Yankton              | Utica            | SD    | 57067 | Midwest   | ekcorrigan           |y
+| 382832 | Hon.        | Alvera     | X              | Ennis      | F      | alvera.ennis@ibm.com            | Rex Ennis            | Carmella Ennis      | Stclair            | 29685         | 0.875219907   |         36 |            50 | 38515           | Q4                 | H2             |            2005 |              12 | December              | Dec         |              6 | Tuesday        | Tue       |                   12 | 148872 |                 0.10 | 016-94-5665 | 203-287-9205 | Cromwell         | Middlesex            | Cromwell         | CT    | 6416  | Northeast | axennis           |#gfO;.q
+| 666407 | Hon.        | Ha         | A              | Matson     | F      | ha.matson@hotmail.com           | Alva Matson          | Britany Matson      | Gillette           | 2/13/1962     | 0.665729167   |         55 |            45 | 1/26/2005       | Q1                 | H1             |            2005 |               1 | January               | Jan         |             26 | Wednesday      | Wed       |                   13 | 154388 |                 0.25 | 016-94-7116 | 239-781-9873 | Tampa            | Hillsborough         | Tampa            | FL    | 33633 | South     | hamatson            |e%a
++--------+-------------+------------+----------------+------------+--------+---------------------------------+----------------------+---------------------+--------------------+---------------+---------------+------------+---------------+-----------------+--------------------+----------------+-----------------+-----------------+-----------------------+-------------+----------------+----------------+-----------+----------------------+--------+----------------------+-------------+--------------+------------------+----------------------+------------------+-------+-------+-----------+--------------+------------------+
+100 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > mysqldump human_resources
+                                                -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump human_resources' at line 1
+ MySQL  localhost:3306 ssl  human_resources  SQL > mysqldump -u root@localhost -p human_resources > nombre_del_archivo.sql
+                                                -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqldump -u root@localhost -p human_resources > nombre_del_archivo.sql' at line 1
+ MySQL  localhost:3306 ssl  human_resources  SQL > \help
+The Shell Help is organized in categories and topics. To get help for a
+specific category or topic use: \? <pattern>
+
+The <pattern> argument should be the name of a category or a topic.
+
+The pattern is a filter to identify topics for which help is required, it can
+use the following wildcards:
+
+- ? matches any single character.
+- * matches any character sequence.
+
+The following are the main help categories:
+
+ - Shell Commands Provides details about the available built-in shell commands.
+ - SQL Syntax     Entry point to retrieve syntax help on SQL statements.
+
+The available topics include:
+
+- The available shell commands.
+- Any word that is part of an SQL statement.
+- Command Line - invoking built-in shell functions without entering interactive
+  mode.
+
+SHELL COMMANDS
+
+The shell commands allow executing specific operations including updating the
+shell configuration.
+
+The following shell commands are available:
+
+ - \                   Start multi-line input when in SQL mode.
+ - \connect    (\c)    Connects the shell to a MySQL server and assigns the
+                       global session.
+ - \disconnect         Disconnects the global session.
+ - \edit       (\e)    Launch a system editor to edit a command to be executed.
+ - \exit               Exits the MySQL Shell, same as \quit.
+ - \G                  Send command to mysql server, display result vertically.
+ - \g                  Send command to mysql server.
+ - \help       (\?,\h) Prints help information about a specific topic.
+ - \history            View and edit command line history.
+ - \js                 Switches to JavaScript processing mode.
+ - \nopager            Disables the current pager.
+ - \nowarnings (\w)    Don't show warnings after every statement.
+ - \option             Allows working with the available shell options.
+ - \pager      (\P)    Sets the current pager.
+ - \py                 Switches to Python processing mode.
+ - \quit       (\q)    Exits the MySQL Shell.
+ - \reconnect          Reconnects the global session.
+ - \rehash             Refresh the autocompletion cache.
+ - \show               Executes the given report with provided options and
+                       arguments.
+ - \source     (\.)    Loads and executes a script from a file.
+ - \sql                Executes SQL statement or switches to SQL processing
+                       mode when no statement is given.
+ - \status     (\s)    Print information about the current global session.
+ - \system     (\!)    Execute a system shell command.
+ - \use        (\u)    Sets the active schema.
+ - \warnings   (\W)    Show warnings after every statement.
+ - \watch              Executes the given report with provided options and
+                       arguments in a loop.
+
+EXAMPLES
+\? sql syntax
+      Displays the main SQL help categories.
+
+\? select
+      Displays information about the SELECT SQL statement.
+ MySQL  localhost:3306 ssl  human_resources  SQL > user();
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'user()' at line 1
+ MySQL  localhost:3306 ssl  human_resources  SQL > \use orders
+Default schema set to `orders`.
+Fetching global names, object names from `orders` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  orders  SQL > show tables;
++------------------+
+| Tables_in_orders |
++------------------+
+| orders           |
+| products         |
+| usuarios         |
++------------------+
+3 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > desc products;
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                             | Null | Key | Default | Extra |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| product_id   | varchar(50)                                      | NO   | PRI | NULL    |       |
+| category     | enum('Furniture','Office Supplies','Technology') | NO   |     | NULL    |       |
+| sub_Category | varchar(30)                                      | YES  |     | NULL    |       |
+| product_name | varchar(50)                                      | NO   |     | NULL    |       |
+| quantity     | int                                              | NO   |     | NULL    |       |
+| discount     | int                                              | NO   |     | NULL    |       |
+| profit       | double                                           | NO   |     | NULL    |       |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1265 (01000): Data truncated for column 'category' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1262 (01000): Row 1 was truncated; it contained more data than there were input columns
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products add COLUMN sales double after product_name;
+Query OK, 0 rows affected (0.0078 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > desc products;
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                             | Null | Key | Default | Extra |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| product_id   | varchar(50)                                      | NO   | PRI | NULL    |       |
+| category     | enum('Furniture','Office Supplies','Technology') | NO   |     | NULL    |       |
+| sub_Category | varchar(30)                                      | YES  |     | NULL    |       |
+| product_name | varchar(50)                                      | NO   |     | NULL    |       |
+| sales        | double                                           | YES  |     | NULL    |       |
+| quantity     | int                                              | NO   |     | NULL    |       |
+| discount     | int                                              | NO   |     | NULL    |       |
+| profit       | double                                           | NO   |     | NULL    |       |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+8 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1406 (22001): Data too long for column 'product_name' at row 2
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products MODIFY COLUMN product_name varchar(100) ;
+Query OK, 0 rows affected (0.0151 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry 'FUR-TA-10000577' for key 'products.PRIMARY'
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products DROP PRIMARY KEY;
+Query OK, 0 rows affected (0.0157 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products MODIFY COLUMN product_name varchar(100) key ;
+Query OK, 0 rows affected (0.0139 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > desc products;
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                             | Null | Key | Default | Extra |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| product_id   | varchar(50)                                      | NO   |     | NULL    |       |
+| category     | enum('Furniture','Office Supplies','Technology') | NO   |     | NULL    |       |
+| sub_Category | varchar(30)                                      | YES  |     | NULL    |       |
+| product_name | varchar(100)                                     | NO   | PRI | NULL    |       |
+| sales        | double                                           | YES  |     | NULL    |       |
+| quantity     | int                                              | NO   |     | NULL    |       |
+| discount     | int                                              | NO   |     | NULL    |       |
+| profit       | double                                           | NO   |     | NULL    |       |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+8 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry 'Bretford CR4500 Series Slim Rectangular Table' for key 'products.PRIMARY'
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products DROP PRIMARY KEY;
+Query OK, 0 rows affected (0.0148 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > ALTER TABLE products MODIFY COLUMN product_id varchar(100) key ;
+Query OK, 0 rows affected (0.0173 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/d.csv' INTO TABLE products FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1062 (23000): Duplicate entry 'FUR-TA-10000577' for key 'products.PRIMARY'
+ MySQL  localhost:3306 ssl  orders  SQL >

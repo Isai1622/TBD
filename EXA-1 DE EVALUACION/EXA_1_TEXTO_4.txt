@@ -1,0 +1,420 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 12
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > create database orders;
+Query OK, 1 row affected (0.0030 sec)
+ MySQL  localhost:3306 ssl  SQL > create table orders(
+                               -> row_id int key auto_increment,
+                               -> order_id varchar(25) not null,
+                               -> order_date int not null,
+                               -> ship_date int not null,
+                               -> ship_mode int not null,
+                               -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 6
+ MySQL  localhost:3306 ssl  SQL > create table orders( row_id int key auto_increment, order_id varchar(25) not null, order_date int not null, ship_date int not null, ship_mode enum('second_class', 'standard_class', 'fist_class') not null,
+                               -> m;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+ MySQL  localhost:3306 ssl  SQL > create table orders( row_id int key auto_increment, order_id varchar(25) not null, order_date int not null, ship_date int not null, ship_mode enum('second_class', 'standard_class', 'first_class') not null, 
+                               -> customer_id int not null,
+                               -> costumer_name varchar(50) not null,
+                               -> segment enum('consumer', 'home office', 'corporate') not null,
+                               -> country varchar(70) not null,
+                               -> city varchar(40) not null,
+                               -> state varchar(40) not null,
+                               -> postal_code int,
+                               -> region enum('south', 'west', 'central', 'east') not null;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 9
+ MySQL  localhost:3306 ssl  SQL > create table orders( row_id int key auto_increment, order_id varchar(25) not null, order_date int not null, ship_date int not null, ship_mode enum('second_class', 'standard_class', 'first_class') not null,   customer_id int not null, customer_name varchar(50) not null, segment enum('consumer', 'home office', 'corporate') not null, country varchar(70) not null, city varchar(40) not null, state varchar(40) not null, postal_code int, region enum('south', 'west', 'central', 'east') not null);
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > \use orders
+Default schema set to `orders`.
+Fetching global names, object names from `orders` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  orders  SQL > create table orders( row_id int key auto_increment, order_id varchar(25) not null, order_date int not null, ship_date int not null, ship_mode enum('second_class', 'standard_class', 'first_class') not null,   customer_id int not null, customer_name varchar(50) not null, segment enum('consumer', 'home office', 'corporate') not null, country varchar(70) not null, city varchar(40) not null, state varchar(40) not null, postal_code int, region enum('south', 'west', 'central', 'east') not null);
+Query OK, 0 rows affected (0.0100 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > desc orders;
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+| Field         | Type                                                | Null | Key | Default | Extra          |
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+| row_id        | int                                                 | NO   | PRI | NULL    | auto_increment |
+| order_id      | varchar(25)                                         | NO   |     | NULL    |                |
+| order_date    | int                                                 | NO   |     | NULL    |                |
+| ship_date     | int                                                 | NO   |     | NULL    |                |
+| ship_mode     | enum('second_class','standard_class','first_class') | NO   |     | NULL    |                |
+| customer_id   | int                                                 | NO   |     | NULL    |                |
+| customer_name | varchar(50)                                         | NO   |     | NULL    |                |
+| segment       | enum('consumer','home office','corporate')          | NO   |     | NULL    |                |
+| country       | varchar(70)                                         | NO   |     | NULL    |                |
+| city          | varchar(40)                                         | NO   |     | NULL    |                |
+| state         | varchar(40)                                         | NO   |     | NULL    |                |
+| postal_code   | int                                                 | YES  |     | NULL    |                |
+| region        | enum('south','west','central','east')               | NO   |     | NULL    |                |
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+13 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile 'C:\Users\isai1\OneDrive\Escritorio'
+                                       -> into table orders
+                                       -> fields terminated by ','
+                                       -> lines terminated by '\n'
+                                       -> ignore 1 rows;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile 'C:\Users\isai1\OneDrive\Escritorio' into table orders fields terminated by ',' lines terminated by '\n' ignore 1 rows;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile C:\Users\isai1\OneDrive\Escritorio into table orders fields terminated by ',' lines terminated by '\n' ignore 1 rows;
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\i'
+ERROR: Unknown command '\O'
+ERROR: Unknown command '\E'
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'C:serssai1neDrivescritorio into table orders fields terminated by ',' lines term' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile 'C:\Users\isai1\OneDrive\Escritorio\orders.csv' into table orders fields terminated by ',' lines terminated by '\n' ignore 1 rows;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile 'secure-file-priv-C:\Users\isai1\OneDrive\Escritorio\orders.csv' into table orders fields terminated by ',' lines terminated by '\n' ignore 1 rows;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > \mysqld
+Unknown command: '\mysqld'
+ MySQL  localhost:3306 ssl  orders  SQL > load data infile 'secure-file-priv=C:\Users\isai1\OneDrive\Escritorio\orders.csv' into table orders fields terminated by ',' lines terminated by '\n' ignore 1 rows;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > load data
+                                       -> infile 'orders.csv'
+                                       -> into table orders
+                                       -> FIELDS TERMINATED BY ','
+                                       -> LINES TERMINATED BY '\n'
+                                       -> IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > --activate-all-roles-on-login[on]
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--activate-all-roles-on-login[on]' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > activate_all_roles_on_login;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'activate_all_roles_on_login' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > load data  infile 'orders.csv' into table orders FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > SHOW VARIABLES LIKE 'secure_file_priv';
++------------------+------------------------------------------------+
+| Variable_name    | Value                                          |
++------------------+------------------------------------------------+
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\ |
++------------------+------------------------------------------------+
+1 row in set, 1 warning (0.0088 sec)
+Warning (code 1366): Incorrect string value: '\xE1ndar ...' for column 'VARIABLE_VALUE' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > sudo mv C:\Users\isai1\OneDrive\Escritorio\orders.csv C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\i'
+ERROR: Unknown command '\O'
+ERROR: Unknown command '\E'
+ERROR: Unknown command '\o'
+ERROR: Unknown command '\P'
+ERROR: Unknown command '\M'
+ERROR: Unknown command '\M'
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\
+'
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sudo mv C:serssai1neDrivescritoriorders.csv C:rogramDataySQLySQL Server 8.0pload' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE '/var/lib/mysql-files/archivo.csv'
+                                       -> INTO TABLE nombre_tabla
+                                       -> FIELDS TERMINATED BY ','
+                                       -> ENCLOSED BY '"'
+                                       -> LINES TERMINATED BY '\n'
+                                       -> IGNORE 1 ROWS;
+ERROR: 1146 (42S02): Table 'orders.nombre_tabla' doesn't exist
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > SHOW VARIABLES LIKE 'secure_file_priv';
++------------------+------------------------------------------------+
+| Variable_name    | Value                                          |
++------------------+------------------------------------------------+
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\ |
++------------------+------------------------------------------------+
+1 row in set, 1 warning (0.0015 sec)
+Warning (code 1366): Incorrect string value: '\xE1ndar ...' for column 'VARIABLE_VALUE' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > sudo mv C:\Users\isai1\OneDrive\Escritorio\orders.csv C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\i'
+ERROR: Unknown command '\O'
+ERROR: Unknown command '\E'
+ERROR: Unknown command '\o'
+ERROR: Unknown command '\P'
+ERROR: Unknown command '\M'
+ERROR: Unknown command '\M'
+ERROR: Unknown command '\U'
+ERROR: Unknown command '\
+'
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sudo mv C:serssai1neDrivescritoriorders.csv C:rogramDataySQLySQL Server 8.0pload' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > sudo mv serssai1neDrivescritoriorders.csv rogramDataySQLySQL Server 8.0ploads;
+
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sudo mv serssai1neDrivescritoriorders.csv rogramDataySQLySQL Server 8.0ploads' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > sudo mv serssai1neDrivescritoriorders.csv ProgramDataySQLySQL Server 8.0ploads;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sudo mv serssai1neDrivescritoriorders.csv ProgramDataySQLySQL Server 8.0ploads' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > SHOW VARIABLES LIKE 'secure_file_priv';
++------------------+------------------------------------------------+
+| Variable_name    | Value                                          |
++------------------+------------------------------------------------+
+| secure_file_priv | C:\ProgramData\MySQL\MySQL Server 8.0\Uploads\ |
++------------------+------------------------------------------------+
+1 row in set, 1 warning (0.0015 sec)
+Warning (code 1366): Incorrect string value: '\xE1ndar ...' for column 'VARIABLE_VALUE' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > CREATE USER 'superusuario'@'localhost' IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.0118 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > GRANT ALL PRIVILEGES ON *.* TO 'superusuario'@'localhost' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.0050 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > LOAD DATA INFILE 'C://import/orders.csv' INTO TABLE orders FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+ERROR: 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+ MySQL  localhost:3306 ssl  orders  SQL > insert into orders
+                                       -> (order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment, country, city, state, postal_code, region  )
+                                       -> values ('CA-2016-152152', 42682, 42685, 'Second Class', 'CG-12520', 'Claire Gute', 'consumer' , 'united states', 'henderson', 'kentucky', 42420, 'south' );
+ERROR: 1265 (01000): Data truncated for column 'ship_mode' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > desc orders
+                                       -> ;
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+| Field         | Type                                                | Null | Key | Default | Extra          |
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+| row_id        | int                                                 | NO   | PRI | NULL    | auto_increment |
+| order_id      | varchar(25)                                         | NO   |     | NULL    |                |
+| order_date    | int                                                 | NO   |     | NULL    |                |
+| ship_date     | int                                                 | NO   |     | NULL    |                |
+| ship_mode     | enum('second_class','standard_class','first_class') | NO   |     | NULL    |                |
+| customer_id   | int                                                 | NO   |     | NULL    |                |
+| customer_name | varchar(50)                                         | NO   |     | NULL    |                |
+| segment       | enum('consumer','home office','corporate')          | NO   |     | NULL    |                |
+| country       | varchar(70)                                         | NO   |     | NULL    |                |
+| city          | varchar(40)                                         | NO   |     | NULL    |                |
+| state         | varchar(40)                                         | NO   |     | NULL    |                |
+| postal_code   | int                                                 | YES  |     | NULL    |                |
+| region        | enum('south','west','central','east')               | NO   |     | NULL    |                |
++---------------+-----------------------------------------------------+------+-----+---------+----------------+
+13 rows in set (0.0036 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > insert into orders  (order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment, country, city, state, postal_code, region  )  values ('CA-2016-152152', 42682, 42685, 'second_class', 'CG-12520', 'Claire Gute', 'consumer' , 'united states', 'henderson', 'kentucky', 42420, 'south' );
+ERROR: 1366 (HY000): Incorrect integer value: 'CG-12520' for column 'customer_id' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > insert into orders  (order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment, country, city, state, postal_code, region  )  values ('CA-2016-152152', 42682, 42685, 'second_class', 'C12520', 'Claire Gute', 'consumer' , 'united states', 'henderson', 'kentucky', 42420, 'south' );
+ERROR: 1366 (HY000): Incorrect integer value: 'C12520' for column 'customer_id' at row 1
+ MySQL  localhost:3306 ssl  orders  SQL > insert into orders  (order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment, country, city, state, postal_code, region  )  values ('CA-2016-152152', 42682, 42685, 'second_class', '12520', 'Claire Gute', 'consumer' , 'united states', 'henderson', 'kentucky', 42420, 'south' );
+Query OK, 1 row affected (0.0033 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > select * from orders;
++--------+----------------+------------+-----------+--------------+-------------+---------------+----------+---------------+-----------+----------+-------------+--------+
+| row_id | order_id       | order_date | ship_date | ship_mode    | customer_id | customer_name | segment  | country       | city      | state    | postal_code | region |
++--------+----------------+------------+-----------+--------------+-------------+---------------+----------+---------------+-----------+----------+-------------+--------+
+|      1 | CA-2016-152152 |      42682 |     42685 | second_class |       12520 | Claire Gute   | consumer | united states | henderson | kentucky |       42420 | south  |
++--------+----------------+------------+-----------+--------------+-------------+---------------+----------+---------------+-----------+----------+-------------+--------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > create table products()
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > create table products(
+                                       -> product_id varchar(50) key,
+                                       -> category enum('Furniture', 'Office Supplies', 'Technology') not null,
+                                       -> Sub-Category varchar(30),
+                                       -> product_name varchar(50) not null,
+                                       -> quantily int not null,
+                                       -> discount int not null,
+                                       -> profit double not null;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-Category varchar(30),
+product_name varchar(50) not null,
+quantily int not null,' at line 4
+ MySQL  localhost:3306 ssl  orders  SQL > create table products( product_id varchar(50) key, category enum('Furniture', 'Office Supplies', 'Technology') not null, Sub-Category varchar(30), product_name varchar(50) not null, quantity int not null, discount int not null, profit double not null);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-Category varchar(30), product_name varchar(50) not null, quantity int not null,' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > create table products( product_id varchar(50) key, category enum('Furniture', 'Office Supplies', 'Technology') not null, sub_Category varchar(30), product_name varchar(50) not null, quantity int not null, discount int not null, profit double not null);
+Query OK, 0 rows affected (0.0160 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > desc products;
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                             | Null | Key | Default | Extra |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+| product_id   | varchar(50)                                      | NO   | PRI | NULL    |       |
+| category     | enum('Furniture','Office Supplies','Technology') | NO   |     | NULL    |       |
+| sub_Category | varchar(30)                                      | YES  |     | NULL    |       |
+| product_name | varchar(50)                                      | NO   |     | NULL    |       |
+| quantity     | int                                              | NO   |     | NULL    |       |
+| discount     | int                                              | NO   |     | NULL    |       |
+| profit       | double                                           | NO   |     | NULL    |       |
++--------------+--------------------------------------------------+------+-----+---------+-------+
+7 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > create database human resources;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'resources' at line 1
+ MySQL  localhost:3306 ssl  orders  SQL > create database human_resources;
+Query OK, 1 row affected (0.0049 sec)
+ MySQL  localhost:3306 ssl  orders  SQL > \use human resources
+Incorrect number of arguments for use command, usage:
+\use <schema_name>
+ MySQL  localhost:3306 ssl  orders  SQL > \use human_resources
+Default schema set to `human_resources`.
+Fetching global names, object names from `human_resources` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  human_resources  SQL > create table HR(
+                                                -> emp_id int key,
+                                                -> name_prefix varchar(10),
+                                                -> fisrt_name varchar(50),
+                                                -> middle initial varchar(1),
+                                                -> last_name varchar(50) not null,
+                                                -> gender enum('F', 'M'),
+                                                -> e_mail varchar (120),
+                                                -> father_name varchar(100),
+                                                -> mother_name varchar(100),
+                                                -> mother_maiden_name varchar(100),
+                                                -> date_of_birth time,
+                                                -> time_of_birth timesad;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'initial varchar(1),
+last_name varchar(50) not null,
+gender enum('F', 'M'),
+e_mai' at line 5
+ MySQL  localhost:3306 ssl  human_resources  SQL > create table HR( emp_id int key, name_prefix varchar(10), fisrt_name varchar(50), middle initial varchar(1), last_name varchar(50) not null, gender enum('F', 'M'), e_mail varchar (120), father_name varchar(100), mother_name varchar(100), mother_maiden_name varchar(100), date_of_birth date, time_of_birth time
+
+                                                -> ,
+                                                -> age_in_yrs int,
+                                                -> weight_in_kgs int,
+                                                -> date_of_joining date,
+                                                -> quarter_of_joining varchar(10),
+                                                -> half_of_joinig varchar(10),
+                                                -> year_of_joining int,
+                                                -> month_of_joinig int,
+                                                -> month_name_of_joining varchar(10),
+                                                -> short_month varchar(3),
+                                                -> day_of_joining int,
+                                                -> dow_of_joining varchar(10),
+                                                -> short_dow varchar(3),
+                                                -> age_in_company_years int,
+                                                -> salary int,
+                                                -> last_hike_percentage decimal(5,2),
+                                                -> ssn varchar(20) not null,
+                                                -> phone_no varchar(20),
+                                                -> place_name varchar(80),
+                                                -> country varchar(50),
+                                                -> city varchar(50),
+                                                -> state varchar(60),
+                                                -> zip varchar(10),
+                                                -> region varchar(10),
+                                                -> user_name varchar(20),
+                                                -> password varchar(20));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'initial varchar(1), last_name varchar(50) not null, gender enum('F', 'M'), e_mai' at line 1
+ MySQL  localhost:3306 ssl  human_resources  SQL > create table HR( emp_id int key, name_prefix varchar(10), fisrt_name varchar(50), middle_initial varchar(1), last_name varchar(50) not null, gender enum('F', 'M'), e_mail varchar (120), father_name varchar(100), mother_name varchar(100), mother_maiden_name varchar(100), date_of_birth date, time_of_birth time , age_in_yrs int, weight_in_kgs int, date_of_joining date, quarter_of_joining varchar(10), half_of_joinig varchar(10), year_of_joining int, month_of_joinig int, month_name_of_joining varchar(10), short_month varchar(3), day_of_joining int, dow_of_joining varchar(10), short_dow varchar(3), age_in_company_years int, salary int, last_hike_percentage decimal(5,2), ssn varchar(20) not null,  phone_no varchar(20), place_name varchar(80), country varchar(50), city varchar(50), state varchar(60), zip varchar(10), region varchar(10), user_name varchar(20), password varchar(20));
+Query OK, 0 rows affected (0.0186 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > desc hr;
++-----------------------+---------------+------+-----+---------+-------+
+| Field                 | Type          | Null | Key | Default | Extra |
++-----------------------+---------------+------+-----+---------+-------+
+| emp_id                | int           | NO   | PRI | NULL    |       |
+| name_prefix           | varchar(10)   | YES  |     | NULL    |       |
+| fisrt_name            | varchar(50)   | YES  |     | NULL    |       |
+| middle_initial        | varchar(1)    | YES  |     | NULL    |       |
+| last_name             | varchar(50)   | NO   |     | NULL    |       |
+| gender                | enum('F','M') | YES  |     | NULL    |       |
+| e_mail                | varchar(120)  | YES  |     | NULL    |       |
+| father_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_name           | varchar(100)  | YES  |     | NULL    |       |
+| mother_maiden_name    | varchar(100)  | YES  |     | NULL    |       |
+| date_of_birth         | date          | YES  |     | NULL    |       |
+| time_of_birth         | time          | YES  |     | NULL    |       |
+| age_in_yrs            | int           | YES  |     | NULL    |       |
+| weight_in_kgs         | int           | YES  |     | NULL    |       |
+| date_of_joining       | date          | YES  |     | NULL    |       |
+| quarter_of_joining    | varchar(10)   | YES  |     | NULL    |       |
+| half_of_joinig        | varchar(10)   | YES  |     | NULL    |       |
+| year_of_joining       | int           | YES  |     | NULL    |       |
+| month_of_joinig       | int           | YES  |     | NULL    |       |
+| month_name_of_joining | varchar(10)   | YES  |     | NULL    |       |
+| short_month           | varchar(3)    | YES  |     | NULL    |       |
+| day_of_joining        | int           | YES  |     | NULL    |       |
+| dow_of_joining        | varchar(10)   | YES  |     | NULL    |       |
+| short_dow             | varchar(3)    | YES  |     | NULL    |       |
+| age_in_company_years  | int           | YES  |     | NULL    |       |
+| salary                | int           | YES  |     | NULL    |       |
+| last_hike_percentage  | decimal(5,2)  | YES  |     | NULL    |       |
+| ssn                   | varchar(20)   | NO   |     | NULL    |       |
+| phone_no              | varchar(20)   | YES  |     | NULL    |       |
+| place_name            | varchar(80)   | YES  |     | NULL    |       |
+| country               | varchar(50)   | YES  |     | NULL    |       |
+| city                  | varchar(50)   | YES  |     | NULL    |       |
+| state                 | varchar(60)   | YES  |     | NULL    |       |
+| zip                   | varchar(10)   | YES  |     | NULL    |       |
+| region                | varchar(10)   | YES  |     | NULL    |       |
+| user_name             | varchar(20)   | YES  |     | NULL    |       |
+| password              | varchar(20)   | YES  |     | NULL    |       |
++-----------------------+---------------+------+-----+---------+-------+
+37 rows in set (0.0057 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > create database credit_cards;
+Query OK, 1 row affected (0.0032 sec)
+ MySQL  localhost:3306 ssl  human_resources  SQL > \use credit_cards;
+Default schema set to `credit_cards`.
+Fetching global names, object names from `credit_cards` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  credit_cards  SQL > create table credit_cards (
+                                             ->   card_type varchar(50),
+                                             ->   full_name varchar(100),
+                                             ->   issuing_bank varchar(100),
+                                             ->   card_number varchar(25) key,
+                                             ->   card_holder_name varchar(100),
+                                             ->   cvv_cvv2 varchar(4),
+                                             ->   issue_date date,
+                                             ->   expiry_date date,
+                                             ->   billing_date date,
+                                             ->   card_pin varchar(4),
+                                             ->   credit_limit decimal(10,2)
+                                             -> );
+Query OK, 0 rows affected (0.0097 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > desc credit_cards;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| card_type        | varchar(50)   | YES  |     | NULL    |       |
+| full_name        | varchar(100)  | YES  |     | NULL    |       |
+| issuing_bank     | varchar(100)  | YES  |     | NULL    |       |
+| card_number      | varchar(25)   | NO   | PRI | NULL    |       |
+| card_holder_name | varchar(100)  | YES  |     | NULL    |       |
+| cvv_cvv2         | varchar(4)    | YES  |     | NULL    |       |
+| issue_date       | date          | YES  |     | NULL    |       |
+| expiry_date      | date          | YES  |     | NULL    |       |
+| billing_date     | date          | YES  |     | NULL    |       |
+| card_pin         | varchar(4)    | YES  |     | NULL    |       |
+| credit_limit     | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+11 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE TABLE usuarios (
+                                             ->     id INT NOT NULL AUTO_INCREMENT,
+                                             ->     username VARCHAR(50) NOT NULL,
+                                             ->     password VARCHAR(50) NOT NULL,
+                                             ->     rol VARCHAR(50) NOT NULL,
+                                             ->     PRIMARY KEY (id)
+                                             -> );
+Query OK, 0 rows affected (0.0106 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > insert into usuarios (username, password, rol)
+                                             -> values ('usuario1', 'contraseña1', 'administrador'),
+                                             ->        ('usuario2', 'contraseña2', 'moderador'),
+                                             ->        ('usuario3', 'contraseña3', 'editor'),
+                                             ->        ('usuario4', 'contraseña4', 'lector'),
+                                             ->        ('usuario5', 'contraseña5', 'invitado');
+Query OK, 5 rows affected (0.0027 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE USER 'usuario1'@'localhost' IDENTIFIED BY 'contraseña1';
+Query OK, 0 rows affected (0.0052 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > GRANT ALL PRIVILEGES ON credit_cards.* TO 'usuario1'@'localhost';
+Query OK, 0 rows affected (0.0018 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE USER 'usuario2'@'localhost' IDENTIFIED BY 'contraseña2';
+Query OK, 0 rows affected (0.0026 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > GRANT SELECT, INSERT, UPDATE ON credit_cards.* TO 'usuario2'@'localhost';
+Query OK, 0 rows affected (0.0014 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL >
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE USER 'usuario3'@'localhost' IDENTIFIED BY 'contraseña3';
+Query OK, 0 rows affected (0.0022 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > GRANT SELECT, INSERT, UPDATE, DELETE ON credit_cards.* TO 'usuario3'@'localhost';
+Query OK, 0 rows affected (0.0015 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL >
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE USER 'usuario4'@'localhost' IDENTIFIED BY 'contraseña4';
+Query OK, 0 rows affected (0.0023 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL > GRANT SELECT ON credit_cards.* TO 'usuario4'@'localhost';
+Query OK, 0 rows affected (0.0008 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL >
+ MySQL  localhost:3306 ssl  credit_cards  SQL > CREATE USER 'usuario5'@'localhost' IDENTIFIED BY 'contraseña5';
+Query OK, 0 rows affected (0.0024 sec)
+ MySQL  localhost:3306 ssl  credit_cards  SQL >
