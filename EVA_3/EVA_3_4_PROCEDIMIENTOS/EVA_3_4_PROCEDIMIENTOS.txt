@@ -1,0 +1,126 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect root@localhost
+Creating a session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8 (X protocol)
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:33060+ ssl  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  sakila  SQL > select (*) count customer;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) count customer' at line 1
+ MySQL  localhost:33060+ ssl  sakila  SQL > select (*) count from customer;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) count from customer' at line 1
+ MySQL  localhost:33060+ ssl  sakila  SQL > select count(*) from customer;
++----------+
+| count(*) |
++----------+
+|      599 |
++----------+
+1 row in set (0.0171 sec)
+ MySQL  localhost:33060+ ssl  sakila  SQL > set @miscorreos = "";
+Query OK, 0 rows affected (0.0021 sec)
+ MySQL  localhost:33060+ ssl  sakila  SQL > select miscorres;
+ERROR: 1054: Unknown column 'miscorres' in 'field list'
+ MySQL  localhost:33060+ ssl  sakila  SQL > select miscorreos;
+ERROR: 1054: Unknown column 'miscorreos' in 'field list'
+ MySQL  localhost:33060+ ssl  sakila  SQL > select * miscorreos;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'miscorreos' at line 1
+ MySQL  localhost:33060+ ssl  sakila  SQL > select @miscorreos;
++-------------+
+| @miscorreos |
++-------------+
+|             |
++-------------+
+1 row in set (0.0005 sec)
+ MySQL  localhost:33060+ ssl  sakila  SQL > call listacorreos(@miscorreos);
+Query OK, 0 rows affected (0.0035 sec)
+ MySQL  localhost:33060+ ssl  sakila  SQL > select @miscorreos;
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| @miscorreos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ROBIN.HAYES@sakilacustomer.org;EMILY.DIAZ@sakilacustomer.org;LILLIAN.GRIFFIN@sakilacustomer.org;ANNIE.RUSSELL@sakilacustomer.org;DIANA.ALEXANDER@sakilacustomer.org;PAULA.BRYANT@sakilacustomer.org;NORMA.GONZALES@sakilacustomer.org;PHYLLIS.FOSTER@sakilacustomer.org;TINA.SIMMONS@sakilacustomer.org;LOIS.BUTLER@sakilacustomer.org;RUBY.WASHINGTON@sakilacustomer.org;JULIA.FLORES@sakilacustomer.org;BONNIE.HUGHES@sakilacustomer.org;WANDA.PATTERSON@sakilacustomer.org;JACQUELINE.LONG@sakilacustomer.org;ANNE.POWELL@sakilacustomer.org;SARA.PERRY@sakilacustomer.org;LOUISE.JENKINS@sakilacustomer.org;KATHRYN.COLEMAN@sakilacustomer.org;ANDREA.HENDERSON@sakilacustomer.org;MARILYN.ROSS@sakilacustomer.org;RACHEL.BARNES@sakilacustomer.org;LORI.WOOD@sakilacustomer.org;JANE.BENNETT@sakilacustomer.org;IRENE.PRICE@sakilacustomer.org;TAMMY.SANDERS@sakilacustomer.org;DENISE.KELLY@sakilacustomer.org;BEVERLY.BROOKS@sakilacustomer.org;THERESA.WATSON@sakilacustomer.org;KATHY.JAMES@sakilacustomer.org;CHRISTINA.RAMIREZ@sakilacustomer.org;JUDY.GRAY@sakilacustomer.org;NICOLE.PETERSON@sakilacustomer.org;KELLY.TORRES@sakilacustomer.org;JANICE.WARD@sakilacustomer.org;ROSE.HOWARD@sakilacustomer.org;JUDITH.COX@sakilacustomer.org;ASHLEY.RICHARDSON@sakilacustomer.org;JOAN.COOPER@sakilacustomer.org;KATHERINE.RIVERA@sakilacustomer.org;MILDRED.BAILEY@sakilacustomer.org;CHERYL.MURPHY@sakilacustomer.org;JEAN.BELL@sakilacustomer.org;EVELYN.MORGAN@sakilacustomer.org;GLORIA.COOK@sakilacustomer.org;DORIS.REED@sakilacustomer.org;TERESA.ROGERS@sakilacustomer.org;HEATHER.MORRIS@sakilacustomer.org;JULIE.SANCHEZ@sakilacustomer.org;ALICE.STEWART@sakilacustomer.org;DIANE.COLLINS@sakilacustomer.org;JOYCE.EDWARDS@sakilacustomer.org;ANN.EVANS@sakilacustomer.org;FRANCES.PARKER@sakilacustomer.org;CATHERINE.CAMPBELL@sakilacustomer.org;JANET.PHILLIPS@sakilacustomer.org;MARIE.TURNER@sakilacustomer.org;CHRISTINE.ROBERTS@sakilacustomer.org;CAROLYN.PEREZ@sakilacustomer.org;STEPHANIE.MITCHELL@sakilacustomer.org;AMANDA.CARTER@sakilacustomer.org;DEBRA.NELSON@sakilacustomer.org;MARTHA.GONZALEZ@sakilacustomer.org;PAMELA.BAKER@sakilacustomer.org;KATHLEEN.ADAMS@sakilacustomer.org;VIRGINIA.GREEN@sakilacustomer.org;REBECCA.SCOTT@sakilacustomer.org;ANNA.HILL@sakilacustomer.org;AMY.LOPEZ@sakilacustomer.org;BRENDA.WRIGHT@sakilacustomer.org;MELISSA.KING@sakilacustomer.org;ANGELA.HERNANDEZ@sakilacustomer.org;CYNTHIA.YOUNG@sakilacustomer.org;SHIRLEY.ALLEN@sakilacustomer.org;JESSICA.HALL@sakilacustomer.org;DEBORAH.WALKER@sakilacustomer.org;KIMBERLY.LEE@sakilacustomer.org;SARAH.LEWIS@sakilacustomer.org;LAURA.RODRIGUEZ@sakilacustomer.org;MICHELLE.CLARK@sakilacustomer.org;SHARON.ROBINSON@sakilacustomer.org;RUTH.MARTINEZ@sakilacustomer.org;CAROL.GARCIA@sakilacustomer.org;DONNA.THOMPSON@sakilacustomer.org;SANDRA.MARTIN@sakilacustomer.org;HELEN.HARRIS@sakilacustomer.org;BETTY.WHITE@sakilacustomer.org;KAREN.JACKSON@sakilacustomer.org;NANCY.THOMAS@sakilacustomer.org;LISA.ANDERSON@sakilacustomer.org;DOROTHY.TAYLOR@sakilacustomer.org;MARGARET.MOORE@sakilacustomer.org;SUSAN.WILSON@sakilacustomer.org;MARIA.MILLER@sakilacustomer.org;JENNIFER.DAVIS@sakilacustomer.org;ELIZABETH.BROWN@sakilacustomer.org;BARBARA.JONES@sakilacustomer.org;LINDA.WILLIAMS@sakilacustomer.org;PATRICIA.JOHNSON@sakilacustomer.org;MARY.SMITH@sakilacustomer.org; |
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:33060+ ssl  sakila  SQL > \use eva_3
+Default schema set to `eva_3`.
+Fetching global names, object names from `eva_3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  eva_3  SQL > create table personas(
+                                        -> id int primary key auto_increment,
+                                        -> nombre varchar(50) not null,
+                                        -> apellido_pat varchar(55) not null,
+                                        -> apellido_mat varchar(55) not null,
+                                        -> fecha_nac date,
+                                        -> clave_rfc varchar(15));
+Query OK, 0 rows affected (0.0208 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac)
+                                        -> values( 'jose', 'rosas', 'soto', '1999-05-05');
+Query OK, 1 row affected (0.0062 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'JUAN', 'RIOS', 'LOPEZ', '1999-05-05');
+Query OK, 1 row affected (0.0050 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'JORGE', 'LOPEZ', 'LOPEZ', '1997-08-05');
+Query OK, 1 row affected (0.0039 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'FRANCISCO', 'JIMENEZ', 'HERNANDEZ', '2000-08-09');
+Query OK, 1 row affected (0.0035 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'EMANUEL', 'RUBIO', 'HERNANDEZ', '1998-02-01');
+Query OK, 1 row affected (0.0030 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'LUIS', 'CRUZ', 'REYES', '1998-05-01');
+Query OK, 1 row affected (0.0027 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'EMILIO', 'CRUZ', 'VEGAS', '1992-04-01');
+Query OK, 1 row affected (0.0037 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > ALTER TABLE PERSONAS MODIFY apellido_mat varchar(55);
+Query OK, 0 rows affected (0.0387 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, apellido_mat, fecha_nac) values( 'JULIO', 'VEGAS', '', '1993-03-02');
+Query OK, 1 row affected (0.0015 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > SELECT(*) COUNT PERSONAS;
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) COUNT PERSONAS' at line 1
+ MySQL  localhost:33060+ ssl  eva_3  SQL > select count(*) from PERSONAS;
++----------+
+| count(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.0017 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, fecha_nac) values( 'JULIO', 'VEGAS', '1993-05-03');
+Query OK, 1 row affected (0.0036 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL > insert into personas(nombre, apellido_pat, fecha_nac) values( 'JULIETA', 'VARGAS', '1993-04-03');
+Query OK, 1 row affected (0.0049 sec)
+ MySQL  localhost:33060+ ssl  eva_3  SQL >
