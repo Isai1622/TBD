@@ -1,0 +1,331 @@
+EVA_3_5_RFC
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 11
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use eva_3
+Default schema set to `eva_3`.
+Fetching global names, object names from `eva_3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_3  SQL > show tables;
++-----------------+
+| Tables_in_eva_3 |
++-----------------+
+| actor           |
+| personas        |
++-----------------+
+2 rows in set (0.0018 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+ERROR: 1305 (42000): PROCEDURE eva_3.actualizar_rfc does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+ERROR: 1305 (42000): PROCEDURE eva_3.actualizar_rfc does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL generaar_rfc();
+ERROR: 1305 (42000): PROCEDURE eva_3.generaar_rfc does not exist
+ MySQL  localhost:3306 ssl  eva_3  SQL > mysql> SELECT generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> SELECT generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23')' at line 1
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * personas;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'personas' at line 1
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+-----------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc |
++----+-----------+--------------+--------------+------------+-----------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | NULL      |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | NULL      |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | NULL      |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | NULL      |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | NULL      |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | NULL      |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | NULL      |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | NULL      |
+|  9 | JULIO     | VEGAS        | NULL         | 1993-05-03 | NULL      |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | NULL      |
++----+-----------+--------------+--------------+------------+-----------+
+10 rows in set (0.0127 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > mysql> SELECT generaar_rfc('jose', 'rosas', 'soto', '1999-05-05');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> SELECT generaar_rfc('jose', 'rosas', 'soto', '1999-05-05')' at line 1
+ MySQL  localhost:3306 ssl  eva_3  SQL > SELECT generaar_rfc('jose', 'rosas', 'soto', '1999-05-05');
++-----------------------------------------------------+
+| generaar_rfc('jose', 'rosas', 'soto', '1999-05-05') |
++-----------------------------------------------------+
+| jors19990505                                        |
++-----------------------------------------------------+
+1 row in set (0.0083 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > SELECT generaar_rfc('jose', 'rosas', 'soto', '1999-05-05');
++-----------------------------------------------------+
+| generaar_rfc('jose', 'rosas', 'soto', '1999-05-05') |
++-----------------------------------------------------+
+| jors19990505                                        |
++-----------------------------------------------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL >  SELECT generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23');
++-------------------------------------------------------+
+| generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23') |
++-------------------------------------------------------+
+| PéJJ19751123                                          |
++-------------------------------------------------------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL >  UPDATE personas SET clave_rfc = generaar_rfc(apellido_pat, apellido_mat, nombre, fecha_nac);
+Query OK, 10 rows affected (0.0092 sec)
+
+Rows matched: 10  Changed: 10  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | NULL         | 1993-05-03 | VEXJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > SELECT generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23');
++-------------------------------------------------------+
+| generaar_rfc('Pérez', 'Jolote', 'Juan', '1975-11-23') |
++-------------------------------------------------------+
+| PéJJ19751123                                          |
++-------------------------------------------------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > mysql> CALL actualizar_rfc();
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> CALL actualizar_rfc()' at line 1
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+Query OK, 0 rows affected (0.0033 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | NULL         | 1993-05-03 | VEXJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_mat = 'Rosas' WHERE id=9;
+Query OK, 1 row affected (0.0057 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | Rosas        | 1993-05-03 | VEXJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+Query OK, 0 rows affected (0.0032 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | Rosas        | 1993-05-03 | VEXJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET clave_rfc = generaar_rfc(apellido_pat, apellido_mat, nombre, fecha_nac);
+Query OK, 1 row affected (0.0038 sec)
+
+Rows matched: 10  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | jose      | rosas        | soto         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | Rosas        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_mat = 'ROSAS' WHERE id=9;
+Query OK, 1 row affected (0.0043 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_mat = 'SOTO' WHERE id=1;
+Query OK, 1 row affected (0.0020 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_pat = 'ROSAS' WHERE id=1;
+Query OK, 1 row affected (0.0048 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET nombre = 'JOSE' WHERE id=1;
+Query OK, 1 row affected (0.0041 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        |              | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_mat = 'RUIZ' WHERE id=8;
+Query OK, 1 row affected (0.0033 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | RUIZ         | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL >  CALL actualizar_rfc();
+Query OK, 0 rows affected (0.0009 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | rosj19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | RUIZ         | 1993-03-02 | VEJ19930302  |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET clave_rfc = generaar_rfc(apellido_pat, apellido_mat, nombre, fecha_nac);
+Query OK, 2 rows affected (0.0037 sec)
+
+Rows matched: 10  Changed: 2  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | ROSJ19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | RUIZ         | 1993-03-02 | VERJ19930302 |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET apellido_mat = 'PEREZ' WHERE id=8;
+Query OK, 1 row affected (0.0031 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+Query OK, 0 rows affected (0.0009 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | ROSJ19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | PEREZ        | 1993-03-02 | VERJ19930302 |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > CALL actualizar_rfc();
+Query OK, 0 rows affected (0.0014 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | ROSJ19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | PEREZ        | 1993-03-02 | VERJ19930302 |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  eva_3  SQL > UPDATE personas SET clave_rfc = generaar_rfc(apellido_pat, apellido_mat, nombre, fecha_nac);
+Query OK, 1 row affected (0.0038 sec)
+
+Rows matched: 10  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_3  SQL > select * from personas;
++----+-----------+--------------+--------------+------------+--------------+
+| id | nombre    | apellido_pat | apellido_mat | fecha_nac  | clave_rfc    |
++----+-----------+--------------+--------------+------------+--------------+
+|  1 | JOSE      | ROSAS        | SOTO         | 1999-05-05 | ROSJ19990505 |
+|  2 | JUAN      | RIOS         | LOPEZ        | 1999-05-05 | RILJ19990505 |
+|  3 | JORGE     | LOPEZ        | LOPEZ        | 1997-08-05 | LOLJ19970805 |
+|  4 | FRANCISCO | JIMENEZ      | HERNANDEZ    | 2000-08-09 | JIHF20000809 |
+|  5 | EMANUEL   | RUBIO        | HERNANDEZ    | 1998-02-01 | RUHE19980201 |
+|  6 | LUIS      | CRUZ         | REYES        | 1998-05-01 | CRRL19980501 |
+|  7 | EMILIO    | CRUZ         | VEGAS        | 1992-04-01 | CRVE19920401 |
+|  8 | JULIO     | VEGAS        | PEREZ        | 1993-03-02 | VEPJ19930302 |
+|  9 | JULIO     | VEGAS        | ROSAS        | 1993-05-03 | VERJ19930503 |
+| 10 | JULIETA   | VARGAS       | NULL         | 1993-04-03 | VAXJ19930403 |
++----+-----------+--------------+--------------+------------+--------------+
+10 rows in set (0.0006 sec)
