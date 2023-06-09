@@ -1,0 +1,571 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 8
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > create user 'prueba3'@'localhost' IDENTIFIED by '12345';
+Query OK, 0 rows affected (0.0168 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > grant select (first_name, last_name) on sakila.customer to 'prueba3'@'localhost';
+Query OK, 0 rows affected (0.0123 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > \connect --mc prueba3@localhost
+Creating a Classic session to 'prueba3@localhost'
+Please provide the password for 'prueba3@localhost': *****
+Save password for 'prueba3@localhost'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 9
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| performance_schema |
+| sakila             |
++--------------------+
+3 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++------------------+
+| Tables_in_sakila |
++------------------+
+| customer         |
++------------------+
+1 row in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer;
+ERROR: 1143 (42000): SELECT command denied to user 'prueba3'@'localhost' for column 'customer_id' in table 'customer'
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from customer limit 10;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| MARY       | SMITH     |
+| PATRICIA   | JOHNSON   |
+| LINDA      | WILLIAMS  |
+| BARBARA    | JONES     |
+| ELIZABETH  | BROWN     |
+| JENNIFER   | DAVIS     |
+| MARIA      | MILLER    |
+| SUSAN      | WILSON    |
+| MARGARET   | MOORE     |
+| DOROTHY    | TAYLOR    |
++------------+-----------+
+10 rows in set (0.0040 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > create user 'prueba4'@'localhost' IDENTIFIED by '12345';
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3306 ssl  sakila  SQL > \connect --mc root@localhost;
+Creating a Classic session to 'root@localhost;'
+Please provide the password for 'root@localhost;': *
+MySQL Error 2005 (HY000): Unknown MySQL server host 'localhost;' (11001)
+ MySQL  localhost:3306 ssl  sakila  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 10
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > create user 'prueba4'@'localhost' IDENTIFIED by '12345';
+Query OK, 0 rows affected (0.0056 sec)
+ MySQL  localhost:3306 ssl  SQL > \use eva_2
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > show tables;
++-----------------+
+| Tables_in_eva_2 |
++-----------------+
+| a               |
+| b               |
+| contacts        |
+| detalle         |
+| detallefactura  |
+| factura         |
+| maestra         |
+| phones          |
+| tablaa          |
+| tablab          |
+| temp            |
++-----------------+
+11 rows in set (0.0011 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > desc phones;
++----------+------+------+-----+---------+----------------+
+| Field    | Type | Null | Key | Default | Extra          |
++----------+------+------+-----+---------+----------------+
+| phone_id | int  | NO   | PRI | NULL    | auto_increment |
+| contact  | int  | YES  | MUL | NULL    |                |
+| phone    | int  | YES  |     | NULL    |                |
++----------+------+------+-----+---------+----------------+
+3 rows in set (0.0038 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > desc contacts;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| contact_id | int         | NO   | PRI | NULL    | auto_increment |
+| name       | varchar(50) | YES  |     | NULL    |                |
+| company    | varchar(40) | YES  |     | NULL    |                |
+| adress     | varchar(40) | YES  |     | NULL    |                |
+| zipcode    | int         | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.0015 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > create user 'prueba4'@'localhost';
+ERROR: 1396 (HY000): Operation CREATE USER failed for 'prueba4'@'localhost'
+ MySQL  localhost:3306 ssl  eva_2  SQL > alter user 'prueba4'@'localhost' IDENTIFIED by '012345';
+Query OK, 0 rows affected (0.0047 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > grant select(name), insert(name), update (name, company, address, zipcode) on eva_2.contacts to 'prueba4'@'localhost';
+ERROR: 1054 (42S22): Unknown column 'address' in 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > grant select(name), insert(name), update (name, company, adress, zipcode) on eva_2.contacts to 'prueba4'@'localhost';
+Query OK, 0 rows affected (0.0029 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > \connect --mc prueba4@localhost
+Creating a Classic session to 'prueba4@localhost'
+Please provide the password for 'prueba4@localhost': ******
+Save password for 'prueba4@localhost'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 11
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use eva_2
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > show tables;
++-----------------+
+| Tables_in_eva_2 |
++-----------------+
+| contacts        |
++-----------------+
+1 row in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > select * from contacts;
+ERROR: 1143 (42000): SELECT command denied to user 'prueba4'@'localhost' for column 'contact_id' in table 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > select name from contacts;
++-------+
+| name  |
++-------+
+| joe   |
+| JANE  |
+| CRHIS |
++-------+
+3 rows in set (0.0036 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 12
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > create user 'prueba5'@'localhost' IDENTIFIED by '12345';
+Query OK, 0 rows affected (0.0045 sec)
+ MySQL  localhost:3306 ssl  SQL > grant all privileges on sakila.* to 'prueba5'@'localhost';
+Query OK, 0 rows affected (0.0041 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba5@localhost
+Creating a Classic session to 'prueba5@localhost'
+Please provide the password for 'prueba5@localhost': *****
+Save password for 'prueba5@localhost'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 13
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching global names, object names from `sakila` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from actor;
++----------+-------------+--------------+---------------------+
+| actor_id | first_name  | last_name    | last_update         |
++----------+-------------+--------------+---------------------+
+|        1 | PENELOPE    | GUINESS      | 2006-02-15 04:34:33 |
+|        2 | NICK        | WAHLBERG     | 2006-02-15 04:34:33 |
+|        3 | ED          | CHASE        | 2006-02-15 04:34:33 |
+|        4 | JENNIFER    | DAVIS        | 2006-02-15 04:34:33 |
+|        5 | JOHNNY      | LOLLOBRIGIDA | 2006-02-15 04:34:33 |
+|        6 | BETTE       | NICHOLSON    | 2006-02-15 04:34:33 |
+|        7 | GRACE       | MOSTEL       | 2006-02-15 04:34:33 |
+|        8 | MATTHEW     | JOHANSSON    | 2006-02-15 04:34:33 |
+|        9 | JOE         | SWANK        | 2006-02-15 04:34:33 |
+|       10 | CHRISTIAN   | GABLE        | 2006-02-15 04:34:33 |
+|       11 | ZERO        | CAGE         | 2006-02-15 04:34:33 |
+|       12 | KARL        | BERRY        | 2006-02-15 04:34:33 |
+|       13 | UMA         | WOOD         | 2006-02-15 04:34:33 |
+|       14 | VIVIEN      | BERGEN       | 2006-02-15 04:34:33 |
+|       15 | CUBA        | OLIVIER      | 2006-02-15 04:34:33 |
+|       16 | FRED        | COSTNER      | 2006-02-15 04:34:33 |
+|       17 | HELEN       | VOIGHT       | 2006-02-15 04:34:33 |
+|       18 | DAN         | TORN         | 2006-02-15 04:34:33 |
+|       19 | BOB         | FAWCETT      | 2006-02-15 04:34:33 |
+|       20 | LUCILLE     | TRACY        | 2006-02-15 04:34:33 |
+|       21 | KIRSTEN     | PALTROW      | 2006-02-15 04:34:33 |
+|       22 | ELVIS       | MARX         | 2006-02-15 04:34:33 |
+|       23 | SANDRA      | KILMER       | 2006-02-15 04:34:33 |
+|       24 | CAMERON     | STREEP       | 2006-02-15 04:34:33 |
+|       25 | KEVIN       | BLOOM        | 2006-02-15 04:34:33 |
+|       26 | RIP         | CRAWFORD     | 2006-02-15 04:34:33 |
+|       27 | JULIA       | MCQUEEN      | 2006-02-15 04:34:33 |
+|       28 | WOODY       | HOFFMAN      | 2006-02-15 04:34:33 |
+|       29 | ALEC        | WAYNE        | 2006-02-15 04:34:33 |
+|       30 | SANDRA      | PECK         | 2006-02-15 04:34:33 |
+|       31 | SISSY       | SOBIESKI     | 2006-02-15 04:34:33 |
+|       32 | TIM         | HACKMAN      | 2006-02-15 04:34:33 |
+|       33 | MILLA       | PECK         | 2006-02-15 04:34:33 |
+|       34 | AUDREY      | OLIVIER      | 2006-02-15 04:34:33 |
+|       35 | JUDY        | DEAN         | 2006-02-15 04:34:33 |
+|       36 | BURT        | DUKAKIS      | 2006-02-15 04:34:33 |
+|       37 | VAL         | BOLGER       | 2006-02-15 04:34:33 |
+|       38 | TOM         | MCKELLEN     | 2006-02-15 04:34:33 |
+|       39 | GOLDIE      | BRODY        | 2006-02-15 04:34:33 |
+|       40 | JOHNNY      | CAGE         | 2006-02-15 04:34:33 |
+|       41 | JODIE       | DEGENERES    | 2006-02-15 04:34:33 |
+|       42 | TOM         | MIRANDA      | 2006-02-15 04:34:33 |
+|       43 | KIRK        | JOVOVICH     | 2006-02-15 04:34:33 |
+|       44 | NICK        | STALLONE     | 2006-02-15 04:34:33 |
+|       45 | REESE       | KILMER       | 2006-02-15 04:34:33 |
+|       46 | PARKER      | GOLDBERG     | 2006-02-15 04:34:33 |
+|       47 | JULIA       | BARRYMORE    | 2006-02-15 04:34:33 |
+|       48 | FRANCES     | DAY-LEWIS    | 2006-02-15 04:34:33 |
+|       49 | ANNE        | CRONYN       | 2006-02-15 04:34:33 |
+|       50 | NATALIE     | HOPKINS      | 2006-02-15 04:34:33 |
+|       51 | GARY        | PHOENIX      | 2006-02-15 04:34:33 |
+|       52 | CARMEN      | HUNT         | 2006-02-15 04:34:33 |
+|       53 | MENA        | TEMPLE       | 2006-02-15 04:34:33 |
+|       54 | PENELOPE    | PINKETT      | 2006-02-15 04:34:33 |
+|       55 | FAY         | KILMER       | 2006-02-15 04:34:33 |
+|       56 | DAN         | HARRIS       | 2006-02-15 04:34:33 |
+|       57 | JUDE        | CRUISE       | 2006-02-15 04:34:33 |
+|       58 | CHRISTIAN   | AKROYD       | 2006-02-15 04:34:33 |
+|       59 | DUSTIN      | TAUTOU       | 2006-02-15 04:34:33 |
+|       60 | HENRY       | BERRY        | 2006-02-15 04:34:33 |
+|       61 | CHRISTIAN   | NEESON       | 2006-02-15 04:34:33 |
+|       62 | JAYNE       | NEESON       | 2006-02-15 04:34:33 |
+|       63 | CAMERON     | WRAY         | 2006-02-15 04:34:33 |
+|       64 | RAY         | JOHANSSON    | 2006-02-15 04:34:33 |
+|       65 | ANGELA      | HUDSON       | 2006-02-15 04:34:33 |
+|       66 | MARY        | TANDY        | 2006-02-15 04:34:33 |
+|       67 | JESSICA     | BAILEY       | 2006-02-15 04:34:33 |
+|       68 | RIP         | WINSLET      | 2006-02-15 04:34:33 |
+|       69 | KENNETH     | PALTROW      | 2006-02-15 04:34:33 |
+|       70 | MICHELLE    | MCCONAUGHEY  | 2006-02-15 04:34:33 |
+|       71 | ADAM        | GRANT        | 2006-02-15 04:34:33 |
+|       72 | SEAN        | WILLIAMS     | 2006-02-15 04:34:33 |
+|       73 | GARY        | PENN         | 2006-02-15 04:34:33 |
+|       74 | MILLA       | KEITEL       | 2006-02-15 04:34:33 |
+|       75 | BURT        | POSEY        | 2006-02-15 04:34:33 |
+|       76 | ANGELINA    | ASTAIRE      | 2006-02-15 04:34:33 |
+|       77 | CARY        | MCCONAUGHEY  | 2006-02-15 04:34:33 |
+|       78 | GROUCHO     | SINATRA      | 2006-02-15 04:34:33 |
+|       79 | MAE         | HOFFMAN      | 2006-02-15 04:34:33 |
+|       80 | RALPH       | CRUZ         | 2006-02-15 04:34:33 |
+|       81 | SCARLETT    | DAMON        | 2006-02-15 04:34:33 |
+|       82 | WOODY       | JOLIE        | 2006-02-15 04:34:33 |
+|       83 | BEN         | WILLIS       | 2006-02-15 04:34:33 |
+|       84 | JAMES       | PITT         | 2006-02-15 04:34:33 |
+|       85 | MINNIE      | ZELLWEGER    | 2006-02-15 04:34:33 |
+|       86 | GREG        | CHAPLIN      | 2006-02-15 04:34:33 |
+|       87 | SPENCER     | PECK         | 2006-02-15 04:34:33 |
+|       88 | KENNETH     | PESCI        | 2006-02-15 04:34:33 |
+|       89 | CHARLIZE    | DENCH        | 2006-02-15 04:34:33 |
+|       90 | SEAN        | GUINESS      | 2006-02-15 04:34:33 |
+|       91 | CHRISTOPHER | BERRY        | 2006-02-15 04:34:33 |
+|       92 | KIRSTEN     | AKROYD       | 2006-02-15 04:34:33 |
+|       93 | ELLEN       | PRESLEY      | 2006-02-15 04:34:33 |
+|       94 | KENNETH     | TORN         | 2006-02-15 04:34:33 |
+|       95 | DARYL       | WAHLBERG     | 2006-02-15 04:34:33 |
+|       96 | GENE        | WILLIS       | 2006-02-15 04:34:33 |
+|       97 | MEG         | HAWKE        | 2006-02-15 04:34:33 |
+|       98 | CHRIS       | BRIDGES      | 2006-02-15 04:34:33 |
+|       99 | JIM         | MOSTEL       | 2006-02-15 04:34:33 |
+|      100 | SPENCER     | DEPP         | 2006-02-15 04:34:33 |
+|      101 | SUSAN       | DAVIS        | 2006-02-15 04:34:33 |
+|      102 | WALTER      | TORN         | 2006-02-15 04:34:33 |
+|      103 | MATTHEW     | LEIGH        | 2006-02-15 04:34:33 |
+|      104 | PENELOPE    | CRONYN       | 2006-02-15 04:34:33 |
+|      105 | SIDNEY      | CROWE        | 2006-02-15 04:34:33 |
+|      106 | GROUCHO     | DUNST        | 2006-02-15 04:34:33 |
+|      107 | GINA        | DEGENERES    | 2006-02-15 04:34:33 |
+|      108 | WARREN      | NOLTE        | 2006-02-15 04:34:33 |
+|      109 | SYLVESTER   | DERN         | 2006-02-15 04:34:33 |
+|      110 | SUSAN       | DAVIS        | 2006-02-15 04:34:33 |
+|      111 | CAMERON     | ZELLWEGER    | 2006-02-15 04:34:33 |
+|      112 | RUSSELL     | BACALL       | 2006-02-15 04:34:33 |
+|      113 | MORGAN      | HOPKINS      | 2006-02-15 04:34:33 |
+|      114 | MORGAN      | MCDORMAND    | 2006-02-15 04:34:33 |
+|      115 | HARRISON    | BALE         | 2006-02-15 04:34:33 |
+|      116 | DAN         | STREEP       | 2006-02-15 04:34:33 |
+|      117 | RENEE       | TRACY        | 2006-02-15 04:34:33 |
+|      118 | CUBA        | ALLEN        | 2006-02-15 04:34:33 |
+|      119 | WARREN      | JACKMAN      | 2006-02-15 04:34:33 |
+|      120 | PENELOPE    | MONROE       | 2006-02-15 04:34:33 |
+|      121 | LIZA        | BERGMAN      | 2006-02-15 04:34:33 |
+|      122 | SALMA       | NOLTE        | 2006-02-15 04:34:33 |
+|      123 | JULIANNE    | DENCH        | 2006-02-15 04:34:33 |
+|      124 | SCARLETT    | BENING       | 2006-02-15 04:34:33 |
+|      125 | ALBERT      | NOLTE        | 2006-02-15 04:34:33 |
+|      126 | FRANCES     | TOMEI        | 2006-02-15 04:34:33 |
+|      127 | KEVIN       | GARLAND      | 2006-02-15 04:34:33 |
+|      128 | CATE        | MCQUEEN      | 2006-02-15 04:34:33 |
+|      129 | DARYL       | CRAWFORD     | 2006-02-15 04:34:33 |
+|      130 | GRETA       | KEITEL       | 2006-02-15 04:34:33 |
+|      131 | JANE        | JACKMAN      | 2006-02-15 04:34:33 |
+|      132 | ADAM        | HOPPER       | 2006-02-15 04:34:33 |
+|      133 | RICHARD     | PENN         | 2006-02-15 04:34:33 |
+|      134 | GENE        | HOPKINS      | 2006-02-15 04:34:33 |
+|      135 | RITA        | REYNOLDS     | 2006-02-15 04:34:33 |
+|      136 | ED          | MANSFIELD    | 2006-02-15 04:34:33 |
+|      137 | MORGAN      | WILLIAMS     | 2006-02-15 04:34:33 |
+|      138 | LUCILLE     | DEE          | 2006-02-15 04:34:33 |
+|      139 | EWAN        | GOODING      | 2006-02-15 04:34:33 |
+|      140 | WHOOPI      | HURT         | 2006-02-15 04:34:33 |
+|      141 | CATE        | HARRIS       | 2006-02-15 04:34:33 |
+|      142 | JADA        | RYDER        | 2006-02-15 04:34:33 |
+|      143 | RIVER       | DEAN         | 2006-02-15 04:34:33 |
+|      144 | ANGELA      | WITHERSPOON  | 2006-02-15 04:34:33 |
+|      145 | KIM         | ALLEN        | 2006-02-15 04:34:33 |
+|      146 | ALBERT      | JOHANSSON    | 2006-02-15 04:34:33 |
+|      147 | FAY         | WINSLET      | 2006-02-15 04:34:33 |
+|      148 | EMILY       | DEE          | 2006-02-15 04:34:33 |
+|      149 | RUSSELL     | TEMPLE       | 2006-02-15 04:34:33 |
+|      150 | JAYNE       | NOLTE        | 2006-02-15 04:34:33 |
+|      151 | GEOFFREY    | HESTON       | 2006-02-15 04:34:33 |
+|      152 | BEN         | HARRIS       | 2006-02-15 04:34:33 |
+|      153 | MINNIE      | KILMER       | 2006-02-15 04:34:33 |
+|      154 | MERYL       | GIBSON       | 2006-02-15 04:34:33 |
+|      155 | IAN         | TANDY        | 2006-02-15 04:34:33 |
+|      156 | FAY         | WOOD         | 2006-02-15 04:34:33 |
+|      157 | GRETA       | MALDEN       | 2006-02-15 04:34:33 |
+|      158 | VIVIEN      | BASINGER     | 2006-02-15 04:34:33 |
+|      159 | LAURA       | BRODY        | 2006-02-15 04:34:33 |
+|      160 | CHRIS       | DEPP         | 2006-02-15 04:34:33 |
+|      161 | HARVEY      | HOPE         | 2006-02-15 04:34:33 |
+|      162 | OPRAH       | KILMER       | 2006-02-15 04:34:33 |
+|      163 | CHRISTOPHER | WEST         | 2006-02-15 04:34:33 |
+|      164 | HUMPHREY    | WILLIS       | 2006-02-15 04:34:33 |
+|      165 | AL          | GARLAND      | 2006-02-15 04:34:33 |
+|      166 | NICK        | DEGENERES    | 2006-02-15 04:34:33 |
+|      167 | LAURENCE    | BULLOCK      | 2006-02-15 04:34:33 |
+|      168 | WILL        | WILSON       | 2006-02-15 04:34:33 |
+|      169 | KENNETH     | HOFFMAN      | 2006-02-15 04:34:33 |
+|      170 | MENA        | HOPPER       | 2006-02-15 04:34:33 |
+|      171 | OLYMPIA     | PFEIFFER     | 2006-02-15 04:34:33 |
+|      172 | GROUCHO     | WILLIAMS     | 2006-02-15 04:34:33 |
+|      173 | ALAN        | DREYFUSS     | 2006-02-15 04:34:33 |
+|      174 | MICHAEL     | BENING       | 2006-02-15 04:34:33 |
+|      175 | WILLIAM     | HACKMAN      | 2006-02-15 04:34:33 |
+|      176 | JON         | CHASE        | 2006-02-15 04:34:33 |
+|      177 | GENE        | MCKELLEN     | 2006-02-15 04:34:33 |
+|      178 | LISA        | MONROE       | 2006-02-15 04:34:33 |
+|      179 | ED          | GUINESS      | 2006-02-15 04:34:33 |
+|      180 | JEFF        | SILVERSTONE  | 2006-02-15 04:34:33 |
+|      181 | MATTHEW     | CARREY       | 2006-02-15 04:34:33 |
+|      182 | DEBBIE      | AKROYD       | 2006-02-15 04:34:33 |
+|      183 | RUSSELL     | CLOSE        | 2006-02-15 04:34:33 |
+|      184 | HUMPHREY    | GARLAND      | 2006-02-15 04:34:33 |
+|      185 | MICHAEL     | BOLGER       | 2006-02-15 04:34:33 |
+|      186 | JULIA       | ZELLWEGER    | 2006-02-15 04:34:33 |
+|      187 | RENEE       | BALL         | 2006-02-15 04:34:33 |
+|      188 | ROCK        | DUKAKIS      | 2006-02-15 04:34:33 |
+|      189 | CUBA        | BIRCH        | 2006-02-15 04:34:33 |
+|      190 | AUDREY      | BAILEY       | 2006-02-15 04:34:33 |
+|      191 | GREGORY     | GOODING      | 2006-02-15 04:34:33 |
+|      192 | JOHN        | SUVARI       | 2006-02-15 04:34:33 |
+|      193 | BURT        | TEMPLE       | 2006-02-15 04:34:33 |
+|      194 | MERYL       | ALLEN        | 2006-02-15 04:34:33 |
+|      195 | JAYNE       | SILVERSTONE  | 2006-02-15 04:34:33 |
+|      196 | BELA        | WALKEN       | 2006-02-15 04:34:33 |
+|      197 | REESE       | WEST         | 2006-02-15 04:34:33 |
+|      198 | MARY        | KEITEL       | 2006-02-15 04:34:33 |
+|      199 | JULIA       | FAWCETT      | 2006-02-15 04:34:33 |
+|      200 | THORA       | TEMPLE       | 2006-02-15 04:34:33 |
++----------+-------------+--------------+---------------------+
+200 rows in set (0.0066 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor limit 10;
++------------+--------------+
+| first_name | last_name    |
++------------+--------------+
+| PENELOPE   | GUINESS      |
+| NICK       | WAHLBERG     |
+| ED         | CHASE        |
+| JENNIFER   | DAVIS        |
+| JOHNNY     | LOLLOBRIGIDA |
+| BETTE      | NICHOLSON    |
+| GRACE      | MOSTEL       |
+| MATTHEW    | JOHANSSON    |
+| JOE        | SWANK        |
+| CHRISTIAN  | GABLE        |
++------------+--------------+
+10 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > ALTER USER 'prueba4'@'localhost' IDENTIFIED BY '12345';
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3306 ssl  sakila  SQL > \connect --mc prueba4@localhost
+Creating a Classic session to 'prueba4@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 14
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > GRANT SELECT (name), INSERT (name), UPDATE (name, company, address, zipcode) ON eva_2.contacts TO 'prueba4'@'localhost';
+ERROR: 1142 (42000): GRANT command denied to user 'prueba4'@'localhost' for table 'contacts'
+ MySQL  localhost:3306 ssl  SQL > \connect --mc prueba4@localhost
+Creating a Classic session to 'prueba4@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 15
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use eva_2;
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > \use eva_2
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > SHOW TABLES;
++-----------------+
+| Tables_in_eva_2 |
++-----------------+
+| contacts        |
++-----------------+
+1 row in set (0.0016 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > SELECT * FROM contacts;
+ERROR: 1143 (42000): SELECT command denied to user 'prueba4'@'localhost' for column 'contact_id' in table 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > SELECT name FROM contacts;
++-------+
+| name  |
++-------+
+| joe   |
+| JANE  |
+| CRHIS |
++-------+
+3 rows in set (0.0003 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > INSERT INTO contacts(name, company) VALUES ('xxx', 'xxx');
+ERROR: 1143 (42000): INSERT command denied to user 'prueba4'@'localhost' for column 'company' in table 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > INSERT INTO contacts(name) VALUES ('xxxx');
+Query OK, 1 row affected (0.0035 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > UPDATE contacts SET name = 'zzzzzz' WHERE name = 'xxxx';
+Query OK, 1 row affected (0.0036 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  eva_2  SQL > DELETE FROM contacts WHERE name = 'julion';
+ERROR: 1142 (42000): DELETE command denied to user 'prueba4'@'localhost' for table 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > DELETE FROM contacts WHERE name = 'zzzzzz';
+ERROR: 1142 (42000): DELETE command denied to user 'prueba4'@'localhost' for table 'contacts'
+ MySQL  localhost:3306 ssl  eva_2  SQL > SELECT USER();
++-------------------+
+| USER()            |
++-------------------+
+| prueba4@localhost |
++-------------------+
+1 row in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > ALTER USER USER() IDENTIFIED BY '123';
+Query OK, 0 rows affected (0.0051 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > CREATE USER 'bloquear'@'localhost' IDENTIFIED BY '12345' FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME 2;
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3306 ssl  eva_2  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 16
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > CREATE USER 'bloquear'@'localhost' IDENTIFIED BY '12345' FAILED_LOGIN_ATTEMPTS 3 PASSWORD_LOCK_TIME 2;
+Query OK, 0 rows affected (0.0074 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc bloquear@localhost
+Creating a Classic session to 'bloquear@localhost'
+Please provide the password for 'bloquear@localhost': *****
+Save password for 'bloquear@localhost'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 17
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > ALTER USER 'bloquear'@'localhost' ACCOUNT UNLOCK;
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER privilege(s) for this operation
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 18
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > ALTER USER 'bloquear'@'localhost' ACCOUNT UNLOCK;
+Query OK, 0 rows affected (0.0031 sec)
+ MySQL  localhost:3306 ssl  SQL > CREATE ROLE 'consultas';
+Query OK, 0 rows affected (0.0045 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT SELECT ON sakila.* TO 'consultas';
+Query OK, 0 rows affected (0.0027 sec)
+ MySQL  localhost:3306 ssl  SQL > GRANT 'consultas' TO 'bloquear'@'localhost';
+Query OK, 0 rows affected (0.0017 sec)
+ MySQL  localhost:3306 ssl  SQL > \connect --mc bloquear@localhost
+Creating a Classic session to 'bloquear@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Error during auto-completion cache update: Access denied; you need (at least one of) the PROCESS privilege(s) for this operation
+Closing old connection...
+Your MySQL connection id is 19
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \use sakila
+MySQL Error 1044: Access denied for user 'bloquear'@'localhost' to database 'sakila'
+ MySQL  localhost:3306 ssl  SQL > SELECT * FROM actor;
+ERROR: 1046 (3D000): No database selected
+ MySQL  localhost:3306 ssl  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Closing old connection...
+Your MySQL connection id is 20
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > REVOKE 'consultas' FROM 'bloquear'@'localhost';
+Query OK, 0 rows affected (0.0023 sec)
+ MySQL  localhost:3306 ssl  SQL > DROP ROLE 'consultas';
+Query OK, 0 rows affected (0.0038 sec)
+ MySQL  localhost:3306 ssl  SQL > DROP USER 'bloquear'@'localhost';
+Query OK, 0 rows affected (0.0034 sec)
+ MySQL  localhost:3306 ssl  SQL >

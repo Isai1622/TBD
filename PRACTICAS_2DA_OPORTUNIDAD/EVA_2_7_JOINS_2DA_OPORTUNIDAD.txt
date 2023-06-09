@@ -1,0 +1,213 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 22
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > \USE Company
+Unknown command: '\USE Company'
+ MySQL  localhost:3306 ssl  SQL > SHOW DATABASES;
++----------------------------+
+| Database                   |
++----------------------------+
+| a                          |
+| abc                        |
+| agencia                    |
+| comp2                      |
+| company                    |
+| credit_cards               |
+| eva1                       |
+| eva3                       |
+| eva_2                      |
+| eva_3                      |
+| evaluacion_1               |
+| hospital                   |
+| hospital_                  |
+| hospital_2                 |
+| human_resources            |
+| information_schema         |
+| ll                         |
+| mysql                      |
+| nombre_de_la_base_de_datos |
+| ordenes                    |
+| orders                     |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
+| ññ                         |
+| ñññ                        |
++----------------------------+
+27 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  SQL > \USE Company
+Unknown command: '\USE Company'
+ MySQL  localhost:3306 ssl  SQL > use company;
+Default schema set to `company`.
+Fetching global names, object names from `company` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  company  SQL > show tables;
++-------------------+
+| Tables_in_company |
++-------------------+
+| address           |
+| employee          |
+| projects          |
++-------------------+
+3 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  company  SQL > DESC address;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| AddressId  | int         | NO   | PRI | NULL    | auto_increment |
+| EmployeeId | int         | YES  | MUL | NULL    |                |
+| Country    | varchar(50) | YES  |     | NULL    |                |
+| State      | varchar(50) | YES  |     | NULL    |                |
+| City       | varchar(50) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  company  SQL > DESC employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EmployeeId | int         | NO   | PRI | NULL    |       |
+| FullName   | varchar(50) | NO   |     | NULL    |       |
+| Technology | varchar(50) | NO   |     | NULL    |       |
+| Salary     | float       | NO   |     | NULL    |       |
+| Gender     | varchar(50) | NO   |     | NULL    |       |
+| Age        | int         | NO   |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  company  SQL > DESC projects;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| ProjectId   | int          | NO   | PRI | NULL    | auto_increment |
+| ProjectName | varchar(200) | NO   |     | NULL    |                |
+| EmployeeId  | int          | YES  | MUL | NULL    |                |
+| StartDate   | datetime     | YES  |     | NULL    |                |
+| EndDate     | datetime     | YES  |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  company  SQL > SELECT * FROM projects WHERE employeeid IS NOT NULL;
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+| ProjectId | ProjectName                                | EmployeeId | StartDate           | EndDate             |
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+|         1 | Develop Ecommerse Website from scratch     |       1003 | 2023-03-23 10:11:36 | 2023-04-22 10:11:36 |
+|         2 | WordPress Website for our company          |       1002 | 2023-03-23 10:11:36 | 2023-05-07 10:11:36 |
+|         3 | Manage our Company Servers                 |       1007 | 2023-03-23 10:11:36 | 2023-05-07 10:11:36 |
+|         4 | Hosting account is not working             |       1009 | 2023-03-23 10:11:36 | 2023-03-30 10:11:36 |
+|         5 | MySQL database from my desktop application |       1010 | 2023-03-23 10:11:36 | 2023-04-07 10:11:36 |
+|         8 | Android Application development            |       1004 | 2023-03-23 10:11:36 | 2023-04-22 10:11:36 |
+|         9 | Hosting account is not working             |       1001 | 2023-03-23 10:11:36 | 2023-03-30 10:11:36 |
+|        10 | MySQL database from my desktop application |       1008 | 2023-03-23 10:11:36 | 2023-04-07 10:11:36 |
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+8 rows in set (0.0040 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select * from projects where employeeid is not null;
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+| ProjectId | ProjectName                                | EmployeeId | StartDate           | EndDate             |
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+|         9 | Hosting account is not working             |       1001 | 2023-03-23 10:11:36 | 2023-03-30 10:11:36 |
+|         2 | WordPress Website for our company          |       1002 | 2023-03-23 10:11:36 | 2023-05-07 10:11:36 |
+|         1 | Develop Ecommerse Website from scratch     |       1003 | 2023-03-23 10:11:36 | 2023-04-22 10:11:36 |
+|         8 | Android Application development            |       1004 | 2023-03-23 10:11:36 | 2023-04-22 10:11:36 |
+|         3 | Manage our Company Servers                 |       1007 | 2023-03-23 10:11:36 | 2023-05-07 10:11:36 |
+|        10 | MySQL database from my desktop application |       1008 | 2023-03-23 10:11:36 | 2023-04-07 10:11:36 |
+|         4 | Hosting account is not working             |       1009 | 2023-03-23 10:11:36 | 2023-03-30 10:11:36 |
+|         5 | MySQL database from my desktop application |       1010 | 2023-03-23 10:11:36 | 2023-04-07 10:11:36 |
++-----------+--------------------------------------------+------------+---------------------+---------------------+
+8 rows in set (0.0024 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select a.projectname, b.fullname from projects a inner join employee b on a.employeeid = b.employeeid;
++--------------------------------------------+-------------------+
+| projectname                                | fullname          |
++--------------------------------------------+-------------------+
+| Hosting account is not working             | John Doe          |
+| WordPress Website for our company          | Mary Smith        |
+| Develop Ecommerse Website from scratch     | James Brown       |
+| Android Application development            | Mike Walker       |
+| Manage our Company Servers                 | Priyanla Dewangan |
+| MySQL database from my desktop application | Sambit Mohanty    |
+| Hosting account is not working             | Pranaya Kumar     |
+| MySQL database from my desktop application | Hina Sharma       |
++--------------------------------------------+-------------------+
+8 rows in set (0.0059 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select a.fullname, b.country, b.state, b.city from employee a inner join address b on a.employeeid = b.employeeid;
++----------------+---------+-------------+---------+
+| fullname       | country | state       | city    |
++----------------+---------+-------------+---------+
+| John Doe       | India   | Odisha      | BBSR    |
+| Mary Smith     | India   | Maharashtra | Mumbai  |
+| James Brown    | India   | Maharashtra | Pune    |
+| Mike Walker    | India   | Odisha      | Cuttack |
+| Linda Jones    | India   | Maharashtra | Nagpur  |
+| Anurag Mohanty | India   | Odisha      | BBSR    |
++----------------+---------+-------------+---------+
+6 rows in set (0.0027 sec)
+ MySQL  localhost:3306 ssl  company  SQL >  select a.projectname, b.fullname, c.city from projects a inner join employee b on a.employeeid = b.employeeid inner join address c on b.employeeid = c.employeeid;
++----------------------------------------+-------------+---------+
+| projectname                            | fullname    | city    |
++----------------------------------------+-------------+---------+
+| Hosting account is not working         | John Doe    | BBSR    |
+| WordPress Website for our company      | Mary Smith  | Mumbai  |
+| Develop Ecommerse Website from scratch | James Brown | Pune    |
+| Android Application development        | Mike Walker | Cuttack |
++----------------------------------------+-------------+---------+
+4 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select a.fullname, b.country, b.state, b.city from employee a inner join address b on a.employeeid=b.employeeid;
++----------------+---------+-------------+---------+
+| fullname       | country | state       | city    |
++----------------+---------+-------------+---------+
+| John Doe       | India   | Odisha      | BBSR    |
+| Mary Smith     | India   | Maharashtra | Mumbai  |
+| James Brown    | India   | Maharashtra | Pune    |
+| Mike Walker    | India   | Odisha      | Cuttack |
+| Linda Jones    | India   | Maharashtra | Nagpur  |
+| Anurag Mohanty | India   | Odisha      | BBSR    |
++----------------+---------+-------------+---------+
+6 rows in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select a.projectname, b.fullname from projects a left join employee b on a.employeeid= b.employeid;
+ERROR: 1054 (42S22): Unknown column 'b.employeid' in 'on clause'
+ MySQL  localhost:3306 ssl  company  SQL > select a.projectname, b.fullname from projects a left join employee b on a.employeeid= b.employeeid;
++------------------------------------------------------+-------------------+
+| projectname                                          | fullname          |
++------------------------------------------------------+-------------------+
+| Develop Ecommerse Website from scratch               | James Brown       |
+| WordPress Website for our company                    | Mary Smith        |
+| Manage our Company Servers                           | Priyanla Dewangan |
+| Hosting account is not working                       | Pranaya Kumar     |
+| MySQL database from my desktop application           | Hina Sharma       |
+| Develop new WordPress plugin for my business website | NULL              |
+| Migrate web application and database to new server   | NULL              |
+| Android Application development                      | Mike Walker       |
+| Hosting account is not working                       | John Doe          |
+| MySQL database from my desktop application           | Sambit Mohanty    |
+| Develop new WordPress plugin for my business website | NULL              |
++------------------------------------------------------+-------------------+
+11 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  company  SQL > select a.projectname, b.fullname from projects a left join employee b on a.employeeid = b.employeid order by b.fullname;
+ERROR: 1054 (42S22): Unknown column 'b.employeid' in 'on clause'
+ MySQL  localhost:3306 ssl  company  SQL > select a.projectname, b.fullname from projects a left join employee b on a.employeeid = b.employeeid order by b.fullname;
++------------------------------------------------------+-------------------+
+| projectname                                          | fullname          |
++------------------------------------------------------+-------------------+
+| Develop new WordPress plugin for my business website | NULL              |
+| Migrate web application and database to new server   | NULL              |
+| Develop new WordPress plugin for my business website | NULL              |
+| MySQL database from my desktop application           | Hina Sharma       |
+| Develop Ecommerse Website from scratch               | James Brown       |
+| Hosting account is not working                       | John Doe          |
+| WordPress Website for our company                    | Mary Smith        |
+| Android Application development                      | Mike Walker       |
+| Hosting account is not working                       | Pranaya Kumar     |
+| Manage our Company Servers                           | Priyanla Dewangan |
+| MySQL database from my desktop application           | Sambit Mohanty    |
++------------------------------------------------------+-------------------+
+11 rows in set (0.0022 sec)
+ MySQL  localhost:3306 ssl  company  SQL >

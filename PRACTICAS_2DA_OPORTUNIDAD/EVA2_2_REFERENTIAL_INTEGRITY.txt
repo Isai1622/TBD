@@ -1,0 +1,114 @@
+MySQL Shell 8.0.32
+
+Copyright (c) 2016, 2023, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \SQL
+Unknown command: '\SQL'
+ MySQL  JS > \sqñ
+Unknown command: '\sqñ'
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mc root@localhost
+Creating a Classic session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 8.0.32 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| a                          |
+| agencia                    |
+| credit_cards               |
+| eva1                       |
+| eva_2                      |
+| evaluacion_1               |
+| human_resources            |
+| information_schema         |
+| mysql                      |
+| nombre_de_la_base_de_datos |
+| orders                     |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+15 rows in set (0.0035 sec)
+ MySQL  localhost:3306 ssl  SQL > \use eva_2
+Default schema set to `eva_2`.
+Fetching global names, object names from `eva_2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  eva_2  SQL > show tables;
++-----------------+
+| Tables_in_eva_2 |
++-----------------+
+| contacts        |
+| detalle         |
+| detallefactura  |
+| factura         |
+| maestra         |
+| phones          |
++-----------------+
+6 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table maestra;
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+                                                                                             |
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| maestra | CREATE TABLE `maestra` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dato` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0189 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table factura;
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+                                                                                       |
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| factura | CREATE TABLE `factura` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_cliente` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0050 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table detalle;
++---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+
+
+                                           |
++---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| detalle | CREATE TABLE `detalle` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_maestro` int DEFAULT NULL,
+  `dato` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_maestro` (`id_maestro`),
+  CONSTRAINT `detalle_ibfk_1` FOREIGN KEY (`id_maestro`) REFERENCES `maestra` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0009 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL > show create table detalleFactura;
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table          | Create Table
+
+
+                                                                |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| detalleFactura | CREATE TABLE `detallefactura` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_factura` int DEFAULT NULL,
+  `id_producto` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_factura` (`id_factura`),
+  CONSTRAINT `detallefactura_ibfk_1` FOREIGN KEY (`id_factura`) REFERENCES `factura` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0030 sec)
+ MySQL  localhost:3306 ssl  eva_2  SQL >
